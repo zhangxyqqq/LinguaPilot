@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any, List
 from openai import OpenAI
 import json
 
-_client = OpenAI()  # 读取 OPENAI_API_KEY
+_client: Optional[OpenAI] = None
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
 

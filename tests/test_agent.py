@@ -493,3 +493,48 @@ def test_global_chat_reset_is_scoped_and_global_fallback_works(monkeypatch, tmp_
     assert persisted["cache"]["global_chat"] == []
     assert persisted["cache"]["vocab"]["alpha"]["chat"][0]["content"] == "keep me"
     assert persisted["user"]["cards"]["alpha"]["last_grade"] == 2
+
+
+def test_learner_overview_is_read_only(tmp_path, monkeypatch):
+    from app import main, materials
+
+    book_id = "overview-book"
+    state_dir = tmp_path / "state"
+    materials_dir = state_dir / "materials"
+    state_dir.mkdir()
+    learner_state = {
+        "book_id": book_id,
+        "user": {
+            "cards": {
+                "affect": {
+                    "reps": 2,
+                    "last_grade": 2,
+                    "due_at": "2020-01-01T00:00:00+00:00",
+                }
+            }
+        },
+        "memory": {
+            "preferences": {},
+            "goals": [{"text": "Pass B2", "source": "explicit"}],
+            "recurring_confusions": [],
+        },
+    }
+    state_path = state_dir / f"{book_id}.json"
+    state_path.write_text(json.dumps(learner_state), encoding="utf-8")
+    materials.add_material(
+        book_id,
+        "notes.txt",
+        b"Affect is usually a verb; effect is usually a noun.",
+        materials_dir=materials_dir,
+    )
+    before = state_path.read_bytes()
+
+    monkeypatch.setattr(main, "STATE_DIR", state_dir)
+    monkeypatch.setattr(materials, "MATERIALS_DIR", materials_dir)
+    result = main.learner_overview(book_id)
+
+    assert result["due"]["total_matches"] == 1
+    assert result["weak"]["total_matches"] == 1
+    assert result["memory"]["goals"] == ["Pass B2"]
+    assert result["material_count"] == 1
+    assert state_path.read_bytes() == before

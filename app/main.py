@@ -4,6 +4,9 @@ from pydantic import BaseModel, Field
 from pathlib import Path
 from datetime import datetime, timezone
 import uuid, json, shutil
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
@@ -24,7 +27,7 @@ from .session_quiz import router as session_quiz_router
 from .materials import router as materials_router
 
 # --- FastAPI app ---
-app = FastAPI(title="LangBuddy MVP")
+app = FastAPI(title="LangBuddy")
 
 
 try:
@@ -37,6 +40,8 @@ except Exception:
 # Read environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+_OPENAI_CLIENT = None
+_IS_ASYNC = False
 
 if OPENAI_API_KEY:
     try:
@@ -47,12 +52,7 @@ if OPENAI_API_KEY:
             _OPENAI_CLIENT = OpenAI(api_key=OPENAI_API_KEY)
             _IS_ASYNC = False
     except Exception as e:
-        print("openai client create error:", e)
-
-print("LLM ready:", bool(_OPENAI_CLIENT),
-      "async:", _IS_ASYNC,
-      "ver:", getattr(_openai_mod,'__version__','n/a'),
-      "key_prefix:", (OPENAI_API_KEY or "")[:7])
+        print("OpenAI client initialization failed:", type(e).__name__)
 APP_DIR = Path(__file__).resolve().parent
 ROOT_DIR = APP_DIR.parent
 DATA_DIR = ROOT_DIR / "data"

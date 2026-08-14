@@ -2,4 +2,16 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.tmp
 state/materials/
+state/session_quiz/
