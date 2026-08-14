@@ -102,6 +102,31 @@ def list_books():
     return {"items": _list_books()}
 
 
+@app.get("/api/books/{book_id}/overview")
+def learner_overview(book_id: str):
+    """Return a small, read-only dashboard view for the selected book."""
+    p = _state_path(book_id)
+    if not p.exists():
+        raise HTTPException(404, "book not found")
+
+    state = json.loads(p.read_text(encoding="utf-8"))
+    from .agent import select_due_words, select_weak_words
+    from .materials import load_material_store
+    from .memory import learner_memory_view
+
+    due = select_due_words(state, limit=5)
+    weak = select_weak_words(state, limit=5)
+    memory = learner_memory_view(state.get("memory"))
+    materials = load_material_store(book_id)
+    return {
+        "book_id": book_id,
+        "due": due,
+        "weak": weak,
+        "memory": memory,
+        "material_count": len(materials.get("documents", [])),
+    }
+
+
 async def call_llm(prompt: str,
                    system: str = "You are an English vocabulary coach. Please respond in a concise, clear, "
                                  "and step-by-step manner, asking a brief question to confirm understanding when necessary.",
