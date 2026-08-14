@@ -1,6 +1,6 @@
 import json
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
@@ -12,14 +12,20 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode, ToolRuntime, tools_condition
 
+from .memory import compact_preferences, learner_memory_view, normalize_memory
+from .materials import search_learning_materials_for_book
+
 
 STATE_DIR = Path(__file__).resolve().parent.parent / "state"
 MAX_TOOL_RESULTS = 20
 
 SYSTEM_PROMPT = """You are a personalized language-learning assistant.
 Use learner tools when the user asks about their progress, weak vocabulary, due reviews, or what they personally should focus on.
+Use learner memory when the user asks about their durable preferences, goals, or recurring confusions.
+Use learning-material search when the user asks about their uploaded notes, textbook excerpts, or other saved materials.
 Answer general language questions directly when learner-specific evidence is unnecessary.
 Treat tool results as the only learner-specific evidence: never claim to have read data you did not read.
+When material search returns evidence, identify the source name in the answer. If it returns no evidence, say so.
 Do not claim that you completed a review, score update, or quiz. Reply concisely in the user's language.
 The current word is context only and does not limit what the user may ask about."""
 
@@ -27,6 +33,7 @@ The current word is context only and does not limit what the user may ask about.
 @dataclass(frozen=True)
 class AgentContext:
     book_id: str
+    memory_snapshot: Mapping[str, Any] = field(default_factory=dict)
 
 
 def _bounded_limit(limit: int) -> int:
@@ -216,7 +223,29 @@ def get_due_words(
     return select_due_words(state, limit=limit)
 
 
-TOOLS = [get_weak_words, get_due_words]
+@tool
+def get_learner_memory(
+    runtime: ToolRuntime[AgentContext, MessagesState],
+) -> Dict[str, Any]:
+    """Get this learner's saved preferences, goals, and recurring confusions."""
+    return learner_memory_view(runtime.context.memory_snapshot)
+
+
+@tool
+def search_learning_materials(
+    runtime: ToolRuntime[AgentContext, MessagesState],
+    query: str,
+    limit: int = 5,
+) -> Dict[str, Any]:
+    """Search this learner's uploaded materials and return source-attributed excerpts."""
+    return search_learning_materials_for_book(
+        runtime.context.book_id,
+        query=query,
+        limit=limit,
+    )
+
+
+TOOLS = [get_weak_words, get_due_words, get_learner_memory, search_learning_materials]
 
 
 @lru_cache(maxsize=1)
@@ -265,10 +294,17 @@ def _message_content_text(message: AIMessage) -> str:
 
 async def run_agent(
     book_id: str,
-    active_word: str,
+    active_word: Optional[str],
     conversation: List[Dict[str, str]],
+    memory: Optional[Mapping[str, Any]] = None,
 ) -> str:
-    messages = [SystemMessage(content=f"{SYSTEM_PROMPT}\nCurrent word context: {active_word or '(none)' }.")]
+    memory_snapshot = normalize_memory(memory)
+    preferences = compact_preferences(memory_snapshot)
+    memory_context = json.dumps(preferences, ensure_ascii=False) if preferences else "(none)"
+    messages = [SystemMessage(content=(
+        f"{SYSTEM_PROMPT}\nCurrent word context: {active_word or '(none)'}."
+        f"\nSaved response preferences: {memory_context}."
+    ))]
     for item in conversation:
         role = item.get("role")
         content = str(item.get("content") or "")
@@ -279,7 +315,7 @@ async def run_agent(
 
     result = await _agent_graph().ainvoke(
         {"messages": messages},
-        context=AgentContext(book_id=book_id),
+        context=AgentContext(book_id=book_id, memory_snapshot=memory_snapshot),
         config={"recursion_limit": 6},
     )
     final_message = result["messages"][-1]

@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 
 from .morph import MorphService
+from .memory import apply_explicit_memory
 
 def _shared():
     from . import main as _m
@@ -409,6 +410,10 @@ async def vocab_chat(book_id: str, word: str, payload: ChatIn):
     if not user_text:
         raise HTTPException(400, "message is required for plain chat")
 
+    # Durable memory updates are conservative and deterministic. They happen on
+    # the same in-memory state object as chat persistence, avoiding a second
+    # writer that could be overwritten by the final state-file write.
+    apply_explicit_memory(state, user_text)
     conv.append({"role": "user", "content": user_text})
 
     try:
@@ -420,6 +425,7 @@ async def vocab_chat(book_id: str, word: str, payload: ChatIn):
             book_id=book_id,
             active_word=word,
             conversation=conv,
+            memory=state.get("memory"),
         )
     except Exception as e:
         print(f"Agent failure; using legacy plain-chat fallback: {type(e).__name__}: {e}")

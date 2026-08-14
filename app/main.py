@@ -21,6 +21,7 @@ from . import chat
 from . import explain  # 新增
 from .feedback import router as feedback_router
 from .session_quiz import router as session_quiz_router
+from .materials import router as materials_router
 
 # --- FastAPI app ---
 app = FastAPI(title="LangBuddy MVP")
@@ -68,6 +69,7 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 # Learning Configuration
 NEW_CARD_QUOTA_PER_DAY = 10  # Maximum new words per day
 app.include_router(session_quiz_router)
+app.include_router(materials_router)
 # Routers
 app.include_router(chat.router)
 app.include_router(explain.router)
