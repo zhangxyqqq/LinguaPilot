@@ -411,14 +411,26 @@ async def vocab_chat(book_id: str, word: str, payload: ChatIn):
 
     conv.append({"role": "user", "content": user_text})
 
-    sys_prompt = (
-        f"You are an English vocabulary coach. Current word: {word}. "
-        "Explain step-by-step using a root-and-suffix approach, "
-        "provide concise and clear answers, and pose a brief follow-up question to confirm understanding. "
-        "Output plain text only."
-    )
-    history_text = "\n".join(f"{m['role']}: {m['content']}" for m in conv)
-    ai_text = await _call_llm(sys_prompt + "\n\n" + history_text + "\n\nassistant:")
+    try:
+        # Keep this import inside the guarded path so a LangGraph import or
+        # initialization failure can still use the existing chat implementation.
+        from .agent import run_agent
+
+        ai_text = await run_agent(
+            book_id=book_id,
+            active_word=word,
+            conversation=conv,
+        )
+    except Exception as e:
+        print(f"Agent failure; using legacy plain-chat fallback: {type(e).__name__}: {e}")
+        sys_prompt = (
+            f"You are an English vocabulary coach. Current word: {word}. "
+            "Explain step-by-step using a root-and-suffix approach, "
+            "provide concise and clear answers, and pose a brief follow-up question to confirm understanding. "
+            "Output plain text only."
+        )
+        history_text = "\n".join(f"{m['role']}: {m['content']}" for m in conv)
+        ai_text = await _call_llm(sys_prompt + "\n\n" + history_text + "\n\nassistant:")
     assistant_msg = (ai_text or "").strip() or "(Placeholder response: No actual model received)"
 
     conv.append({"role": "assistant", "content": assistant_msg})
