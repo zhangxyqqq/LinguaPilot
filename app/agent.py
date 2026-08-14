@@ -38,6 +38,14 @@ class AgentContext:
     memory_snapshot: Mapping[str, Any] = field(default_factory=dict)
 
 
+@dataclass(frozen=True)
+class AgentRunResult:
+    """Observable Agent outcome used by evaluations without changing chat APIs."""
+
+    answer: str
+    tool_calls: tuple[str, ...] = ()
+
+
 def _bounded_limit(limit: int) -> int:
     try:
         value = int(limit)
@@ -268,15 +276,13 @@ def _model_with_tools():
     return model.bind_tools(TOOLS)
 
 
-async def _agent_node(state: MessagesState) -> Dict[str, Any]:
-    response = await _model_with_tools().ainvoke(state["messages"])
-    return {"messages": [response]}
+def _build_agent_graph(model):
+    async def agent_node(state: MessagesState) -> Dict[str, Any]:
+        response = await model.ainvoke(state["messages"])
+        return {"messages": [response]}
 
-
-@lru_cache(maxsize=1)
-def _agent_graph():
     builder = StateGraph(MessagesState, context_schema=AgentContext)
-    builder.add_node("agent", _agent_node)
+    builder.add_node("agent", agent_node)
     builder.add_node("tools", ToolNode(TOOLS, handle_tool_errors=False))
     builder.add_edge(START, "agent")
     builder.add_conditional_edges(
@@ -286,6 +292,11 @@ def _agent_graph():
     )
     builder.add_edge("tools", "agent")
     return builder.compile()
+
+
+@lru_cache(maxsize=1)
+def _agent_graph():
+    return _build_agent_graph(_model_with_tools())
 
 
 def _message_content_text(message: AIMessage) -> str:
@@ -303,13 +314,14 @@ def _message_content_text(message: AIMessage) -> str:
     return str(content or "").strip()
 
 
-async def run_agent(
+async def run_agent_detailed(
     book_id: str,
     active_word: Optional[str],
     conversation: List[Dict[str, str]],
     memory: Optional[Mapping[str, Any]] = None,
     user_id: Optional[str] = None,
-) -> str:
+    model: Optional[Any] = None,
+) -> AgentRunResult:
     memory_snapshot = normalize_memory(memory)
     preferences = compact_preferences(memory_snapshot)
     memory_context = json.dumps(preferences, ensure_ascii=False) if preferences else "(none)"
@@ -325,7 +337,8 @@ async def run_agent(
         elif role == "user":
             messages.append(HumanMessage(content=content))
 
-    result = await _agent_graph().ainvoke(
+    graph = _agent_graph() if model is None else _build_agent_graph(model)
+    result = await graph.ainvoke(
         {"messages": messages},
         context=AgentContext(
             user_id=user_id or current_user_id(),
@@ -340,4 +353,28 @@ async def run_agent(
     text = _message_content_text(final_message)
     if not text:
         raise RuntimeError("Agent returned an empty response")
-    return text
+    tool_calls = tuple(
+        str(call.get("name"))
+        for message in result["messages"]
+        if isinstance(message, AIMessage)
+        for call in (message.tool_calls or [])
+        if call.get("name")
+    )
+    return AgentRunResult(answer=text, tool_calls=tool_calls)
+
+
+async def run_agent(
+    book_id: str,
+    active_word: Optional[str],
+    conversation: List[Dict[str, str]],
+    memory: Optional[Mapping[str, Any]] = None,
+    user_id: Optional[str] = None,
+) -> str:
+    result = await run_agent_detailed(
+        book_id=book_id,
+        active_word=active_word,
+        conversation=conversation,
+        memory=memory,
+        user_id=user_id,
+    )
+    return result.answer

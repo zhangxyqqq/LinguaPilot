@@ -227,13 +227,17 @@ async def _plain_agent_response(
     memory: Optional[Dict[str, Any]],
     legacy_llm,
     legacy_word_mode: bool = False,
+    agent_runner=None,
 ) -> str:
     try:
         # Keep this import inside the guarded path so a LangGraph import or
         # initialization failure can still use the existing chat implementation.
-        from .agent import run_agent
+        if agent_runner is None:
+            from .agent import run_agent
 
-        return await run_agent(
+            agent_runner = run_agent
+
+        return await agent_runner(
             book_id=book_id,
             active_word=active_word,
             conversation=conversation,

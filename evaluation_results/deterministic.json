@@ -1,0 +1,125 @@
+{
+  "suite": "deterministic",
+  "status": "passed",
+  "passed": 8,
+  "total": 8,
+  "skipped_reason": null,
+  "cases": [
+    {
+      "case_id": "general_tool_avoidance",
+      "passed": true,
+      "expected_tools": [],
+      "observed_tools": [],
+      "checks": {
+        "tool_selection": true,
+        "mentions_affect": true,
+        "mentions_effect": true
+      },
+      "answer_excerpt": "Affect is usually a verb; effect is usually a noun."
+    },
+    {
+      "case_id": "weak_tool_routing",
+      "passed": true,
+      "expected_tools": [
+        "get_weak_words"
+      ],
+      "observed_tools": [
+        "get_weak_words"
+      ],
+      "checks": {
+        "tool_selection": true,
+        "learner_evidence": true
+      },
+      "answer_excerpt": "Evidence from get_weak_words: {\"items\": [{\"reason\": [\"low_last_grade\"], \"signals\": {\"last_grade\": 2}, \"word\": \"weak-alpha\"}], \"total_matches\": 1}"
+    },
+    {
+      "case_id": "due_tool_routing",
+      "passed": true,
+      "expected_tools": [
+        "get_due_words"
+      ],
+      "observed_tools": [
+        "get_due_words"
+      ],
+      "checks": {
+        "tool_selection": true,
+        "learner_evidence": true
+      },
+      "answer_excerpt": "Evidence from get_due_words: {\"invalid_due_at_count\": 0, \"items\": [{\"reason\": [\"review_due\"], \"signals\": {\"due_at\": \"2020-01-01T00:00:00+00:00\", \"last_grade\": 2, \"reps\": 1}, \"word\": \"weak-alpha\"}], \"total_matches\": 1}"
+    },
+    {
+      "case_id": "learner_memory_usage",
+      "passed": true,
+      "expected_tools": [
+        "get_learner_memory"
+      ],
+      "observed_tools": [
+        "get_learner_memory"
+      ],
+      "checks": {
+        "tool_selection": true,
+        "saved_preference": true
+      },
+      "answer_excerpt": "Evidence from get_learner_memory: {\"goals\": [], \"preferences\": {\"response_style\": \"concise\"}, \"recurring_confusions\": []}"
+    },
+    {
+      "case_id": "rag_routing_and_source",
+      "passed": true,
+      "expected_tools": [
+        "search_learning_materials"
+      ],
+      "observed_tools": [
+        "search_learning_materials"
+      ],
+      "checks": {
+        "tool_selection": true,
+        "retrieved_content": true,
+        "source_attribution": true
+      },
+      "answer_excerpt": "Evidence from search_learning_materials: {\"items\": [{\"chunk_index\": 0, \"document_id\": \"grammar-notes\", \"lexical_score\": 1.0, \"match\": \"lexical\", \"score\": 1.0, \"semantic_score\": 0.0, \"source_name\": \"grammar-notes.txt\", \"text\": \"Passive voice uses a form of be plus a past participle.\"}], \"retrieval\": "
+    },
+    {
+      "case_id": "user_isolation",
+      "passed": true,
+      "expected_tools": [
+        "get_weak_words"
+      ],
+      "observed_tools": [
+        "get_weak_words"
+      ],
+      "checks": {
+        "tool_selection": true,
+        "own_evidence": true,
+        "foreign_evidence_absent": true
+      },
+      "answer_excerpt": "Evidence from get_weak_words: {\"items\": [{\"reason\": [\"low_last_grade\"], \"signals\": {\"last_grade\": 1}, \"word\": \"bob-only\"}], \"total_matches\": 1}"
+    },
+    {
+      "case_id": "book_isolation",
+      "passed": true,
+      "expected_tools": [
+        "get_weak_words"
+      ],
+      "observed_tools": [
+        "get_weak_words"
+      ],
+      "checks": {
+        "tool_selection": true,
+        "own_evidence": true,
+        "foreign_evidence_absent": true
+      },
+      "answer_excerpt": "Evidence from get_weak_words: {\"items\": [{\"reason\": [\"low_last_grade\"], \"signals\": {\"last_grade\": 2}, \"word\": \"other-only\"}], \"total_matches\": 1}"
+    },
+    {
+      "case_id": "graceful_fallback",
+      "passed": true,
+      "expected_tools": [],
+      "observed_tools": [],
+      "checks": {
+        "tool_selection": true,
+        "legacy_answer_returned": true
+      },
+      "answer_excerpt": "legacy fallback answer"
+    }
+  ]
+}

@@ -18,3 +18,5 @@ state/session_quiz/
 state/*.sqlite3
 state/*.sqlite3-shm
 state/*.sqlite3-wal
+evaluation_results/live.json
+evaluation_results/live.md
