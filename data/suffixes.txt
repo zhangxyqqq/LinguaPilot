@@ -1,0 +1,6 @@
+-else
+-hed
+-lig
+-skab
+-bar
+-dom

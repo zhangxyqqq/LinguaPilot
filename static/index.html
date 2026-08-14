@@ -1,0 +1,1410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LangBuddy – Minimal UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; line-height: 1.5; }
+    h1 { margin: 0 0 16px; }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; min-width: 280px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    button { padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    button:hover { background:#f6f6f6; }
+    .pill { display:inline-block; padding: 2px 8px; border-radius:999px; background:#f1f5f9; margin-left:8px; font-size:12px; }
+    .list { margin: 8px 0; padding-left: 18px; }
+    code { background: #f6f8fa; padding: 2px 6px; border-radius: 6px; }
+    .muted { color:#6b7280; }
+    .words { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { border:1px solid #e5e7eb; border-radius: 999px; padding: 4px 10px; }
+    .grades button { margin-right:6px; }
+    .wordReviewRow {
+      display: grid !important;
+      grid-template-columns: minmax(92px, 120px) minmax(260px, 320px) minmax(140px, 190px) minmax(120px, 160px);
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0 !important;
+      padding: 4px 0;
+    }
+    .wordReviewRow .word {
+      justify-self: start;
+      font-weight: 600;
+      min-width: 64px;
+      text-align: center;
+    }
+    .wordReviewRow .grades {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .wordReviewRow .grades button {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      margin-right: 0;
+      border-radius: 10px;
+    }
+    .wordReviewRow .result {
+      font-size: 14px;
+      min-width: 130px;
+    }
+    .wordReviewRow .explain {
+      justify-self: start;
+      min-width: 118px;
+    }
+    .wordReviewRow .spacer {
+      display: none;
+    }
+    @media (max-width: 760px) {
+      .wordReviewRow {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .wordReviewRow .word,
+      .wordReviewRow .explain {
+        justify-self: start;
+      }
+    }
+    .grades button.selectedGrade {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #166534;
+      font-weight: 600;
+    }
+    .grades button.savingGrade {
+      opacity: 0.65;
+    }
+    .reviewSaved {
+      color: #16a34a;
+      margin-left: 4px;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+    .reviewError {
+      color: #dc2626;
+      margin-left: 4px;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .exp { margin-top: 6px; line-height: 1.55; }
+    .exp b { font-weight: 600; }
+    .exp ul { margin: 4px 0 8px 18px; padding: 0; }
+    .exp li { margin: 2px 0; }
+    .chip-btn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      font-size: 13px;
+    }
+    .chip-btn:hover { background:#f6f6f6; }
+    .chip-btn.sending { opacity:0.6; transform: translateY(1px); }
+    .chip-btn.error { border-color:#f87171; }
+  </style>
+</head>
+<body>
+  <h1>LangBuddy – Minimal UI</h1>
+
+  <div class="row">
+    <div id="card-upload" class="card">
+      <h3>1) Upload Vocabulary CSV</h3>
+      <input type="file" id="csvFile" accept=".csv" style="display:none" />
+      <button type="button" id="btnChooseFile">Choose File</button>
+      <span id="fileName" class="muted" style="margin-left:8px;">No file chosen</span>
+      <button type="button" id="btnUpload" style="margin-left:12px;">Upload</button>
+      <select id="bookLang" style="margin-left:8px">
+        <option value="en">English</option>
+        <option value="da">Danish</option>
+      </select>
+      <p class="muted">Example: <code>data/book_sample.csv</code></p>
+      <p>Current <code>bookId</code>: <span id="bookId" class="mono">(Not selected)</span></p>
+      <div id="uploadMsg" class="muted"></div>
+    </div>
+
+    <div id="Bookstore" class="card">
+      <h3>My Library</h3>
+      <button id="btnLib">Refresh Library</button>
+      <div id="library"></div>
+    </div>
+
+    <div id="card-groups" class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <h3 style="margin:0;">2) Grouping</h3>
+
+
+      </div>
+  <!-- 拉取分组按钮 -->
+  <div style="margin-top:8px;">
+    <button id="btnListGroups">Pull Grouping</button>
+  </div>
+
+  <!-- 分组结果列表 -->
+  <div id="groups" style="margin-top:8px;"></div>
+</div>
+
+    <div id="card-today" class="card">
+      <h3>3) Today's Learning</h3>
+      <button id="btnToday">Get Today's Tasks</button>
+      <div id="todayStats" class="muted"></div>
+      <h4>due</h4>
+      <div id="dueList"></div>
+      <h4>new</h4>
+      <div id="newList"></div>
+    </div>
+
+    <div id="chatPanel" class="card" style="flex:1; min-height:480px; display:flex; flex-direction:column;">
+     <h3 id="chatTitle">AI Chat</h3>
+      <div id="chipBar" style="display:flex; gap:8px; margin:8px 0 6px 0; overflow:auto; padding-bottom:6px;">
+        <!-- chips will be injected here by JS -->
+      </div>
+      <div id="chatMsgs"
+         style="flex:1; overflow:auto; border:1px solid #eee; border-radius:8px; padding:10px; background:#fafafa;"></div>
+
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <input id="chatInput" placeholder="Ask AI: How can I remember this word more firmly?"
+             style="flex:1; padding:8px 10px;">
+          <button id="chatSend">send</button>
+          <button id="chatReset" title="New Conversation">Reset</button>
+          <button id="btnFeedback" class="btn">Generate Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="quizCard" class="card" style="margin-top:16px;">
+  <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;">
+    <h3 style="margin:0;">Short Quiz</h3>
+    <div>
+      <button id="btnStartSessionQuiz" class="btn">Start Today’s Quiz</button>
+      <button id="btnClearQuiz" class="btn" style="margin-left:8px;">Clear</button>
+    </div>
+  </div>
+  <div id="sessionQuiz" style="margin-top:8px;"></div>
+</div>
+
+
+
+  <template id="wordRow">
+    <div class="row" style="align-items:center; margin:8px 0;">
+      <div class="chip word"></div>
+      <div class="grades">
+        <button data-g="0">0</button>
+        <button data-g="1">1</button>
+        <button data-g="2">2</button>
+        <button data-g="3">3</button>
+        <button data-g="4">4</button>
+        <button data-g="5">5</button>
+      </div>
+      <span class="muted result"></span>
+      <span class="spacer"></span>
+      <button class="explain">Explanation</button>
+      <div class="muted explainBox"></div>
+    </div>
+  </template>
+
+  <script>
+    // gadget
+    function $(sel) { return document.querySelector(sel); }
+    // 小工具：获取“今日学习”的单词
+    function getTodaysWords(){
+      const due = Array.from(document.querySelectorAll('#dueList .word'))
+        .map(el => el.textContent.trim());
+      const nw  = Array.from(document.querySelectorAll('#newList .word'))
+        .map(el => el.textContent.trim());
+      return [...due, ...nw].filter(Boolean);
+    }
+
+    // Helper: Get low-score words for quiz
+    function getLowScoreWords(){
+      const set = window.LOW_SCORE_WORDS;
+      if (!set || typeof set.forEach !== 'function') return [];
+      const todaySet = new Set(getTodaysWords().map(w => String(w).trim().toLowerCase()));
+      const picked = [];
+      set.forEach(function(word){
+        const w = String(word || '').trim();
+        if (!w) return;
+        // Keep the first quiz focused on words currently shown in Today's Learning.
+        if (todaySet.size && !todaySet.has(w.toLowerCase())) return;
+        picked.push(w);
+      });
+      return picked;
+    }
+    // Upload
+    async function uploadCSV() {
+      const msg = $('#uploadMsg');
+      msg.textContent = 'Uploading...';
+      const f = $('#csvFile').files[0];
+      if (!f) { msg.textContent = 'Please select a CSV file'; return; }
+
+      try {
+        const fd = new FormData();
+        fd.append('file', f);
+        const lang = document.querySelector('#bookLang')?.value || 'en';
+        fd.append('lang', lang);
+        const r = await fetch('/api/books/import', { method: 'POST', body: fd });
+
+        // Read body once
+        const txt = await r.text();
+        let data = null;
+        try { data = JSON.parse(txt); } catch (_) {}
+
+        if (!r.ok) {
+          msg.textContent = 'Upload failed:' + (data ? JSON.stringify(data) : txt);
+          console.error('Upload error:', r.status, data || txt);
+          return;
+         }
+
+        setBookId(data.bookId);
+        msg.textContent = 'Upload successful!bookId=' + data.bookId;
+      } catch (err) {
+        msg.textContent = 'Upload error:' + err;
+        console.error(err);
+      }
+    }
+
+   // Custom file selector (English UI)
+    const fileBtn = document.querySelector('#btnChooseFile');
+    const fileInput = document.querySelector('#csvFile');
+    const fileNameEl = document.querySelector('#fileName');
+    if (fileBtn && fileInput) {
+      fileBtn.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', () => {
+        const f = fileInput.files && fileInput.files[0];
+        if (fileNameEl) fileNameEl.textContent = f ? f.name : 'No file chosen';
+      });
+    }
+
+   // Grouped List
+
+    function renderGroupsBrief(groups, ungroupedCount = 0) {
+      var box = $('#groups');
+      if (!groups || !groups.length) {
+        box.innerHTML = '<p class="muted">No groups yet.</p>';
+        return;
+      }
+
+      function isAiGroup(g) {
+        return String((g && g.type) || '').startsWith('ai_');
+      }
+
+      function renderSummaryRow(kind, title, rows, icon, count) {
+        return '<div style="margin:8px 0; border:1px solid #eee; border-radius:10px; padding:8px;">' +
+          '<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">' +
+          '<strong>' + icon + ' ' + title + '</strong>' +
+          '<span class="pill">' + (count || 0) + '</span>' +
+          '<button type="button" class="btnToggleGroupSection" data-kind="' + kind + '">View</button>' +
+          '</div>' +
+          '<div id="groupSection_' + kind + '" class="groupSection" style="display:none; margin-top:8px; padding-left:10px; border-left:3px solid #eee;"></div>' +
+          '</div>';
+      }
+
+      var ruleGroups = [];
+      var aiGroups = [];
+
+      for (var i = 0; i < groups.length; i++) {
+        var g = groups[i];
+        if (isAiGroup(g)) aiGroups.push(g);
+        else ruleGroups.push(g);
+      }
+
+      ruleGroups.sort(function(a, b){ return String(a.label || '').localeCompare(String(b.label || '')); });
+      aiGroups.sort(function(a, b){ return String(a.label || '').localeCompare(String(b.label || '')); });
+
+      window.__GROUPING_CACHE__ = {
+        rule: ruleGroups,
+        ai: aiGroups,
+        ungroupedCount: ungroupedCount || 0
+      };
+
+      var html = '';
+      html += renderSummaryRow('rule', 'Rule-based Groups', ruleGroups, '📘', ruleGroups.length);
+      html += renderSummaryRow('ai', 'AI Suggested Groups', aiGroups, '🤖', aiGroups.length);
+      html += renderSummaryRow('ungrouped', 'Ungrouped', [], '—', ungroupedCount || 0);
+
+      box.innerHTML = html;
+
+      document.querySelectorAll('.btnToggleGroupSection').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          toggleGroupSection(btn.getAttribute('data-kind'));
+        });
+      });
+    }
+
+    async function toggleGroupSection(kind) {
+      var target = document.querySelector('#groupSection_' + kind);
+      if (!target) return;
+
+      var isOpen = target.style.display !== 'none';
+      document.querySelectorAll('.groupSection').forEach(function(sec){
+        sec.style.display = 'none';
+      });
+      document.querySelectorAll('.btnToggleGroupSection').forEach(function(btn){
+        btn.textContent = 'View';
+      });
+
+      if (isOpen) return;
+
+      target.style.display = 'block';
+      var btn = document.querySelector('.btnToggleGroupSection[data-kind="' + kind + '"]');
+      if (btn) btn.textContent = 'Hide';
+
+      if (kind === 'ungrouped') {
+        await renderUngroupedInline(target);
+      } else {
+        renderGroupListInline(kind, target);
+      }
+    }
+
+    function renderGroupListInline(kind, target) {
+      var cache = window.__GROUPING_CACHE__ || {};
+      var rows = kind === 'ai' ? (cache.ai || []) : (cache.rule || []);
+      var icon = kind === 'ai' ? '🤖' : '📘';
+
+      if (!rows.length) {
+        target.innerHTML = '<p class="muted">No groups in this category.</p>';
+        return;
+      }
+
+      var html = '';
+      rows.forEach(function(g){
+        var enc = encodeURIComponent(g.label);
+        html += '<div style="margin:5px 0;">' +
+          '<strong>' + icon + ' ' + escapeHtml(g.label || '') + '</strong> ' +
+          '<span class="pill">' + escapeHtml(g.type || 'unknown') + '</span> ' +
+          '<span class="muted">(' + (g.count || 0) + ')</span> ' +
+          '<button type="button" data-lbl="' + enc + '" class="btnViewGroupInline">View words</button>' +
+          '<div class="inlineGroupWords" id="inlineGroup_' + enc.replace(/[^a-zA-Z0-9_-]/g, '_') + '" style="display:none; margin:6px 0 8px 18px;"></div>' +
+          '</div>';
+      });
+      target.innerHTML = html;
+
+      target.querySelectorAll('.btnViewGroupInline').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          viewGroupInline(btn.getAttribute('data-lbl'), btn);
+        });
+      });
+    }
+
+    async function renderUngroupedInline(target) {
+      if (!BOOK_ID) {
+        target.innerHTML = '<p class="muted">Please select a book first.</p>';
+        return;
+      }
+      target.innerHTML = '<p class="muted">Loading ungrouped words...</p>';
+      try {
+        const r = await fetch(`/api/books/${BOOK_ID}/ungrouped`);
+        const data = await r.json();
+        if (!r.ok) {
+          target.innerHTML = '<p class="muted">Failed to load ungrouped words.</p>';
+          return;
+        }
+        const items = data.items || [];
+        if (!items.length) {
+          target.innerHTML = '<p class="muted">No ungrouped words.</p>';
+          return;
+        }
+        var html = '<div class="words">';
+        items.forEach(function(x){
+          html += '<span class="chip" title="' + escapeHtml(x.decomposition || '') + '">' + escapeHtml(x.word || '') + '</span>';
+        });
+        html += '</div>';
+        target.innerHTML = html;
+      } catch (e) {
+        console.error(e);
+        target.innerHTML = '<p class="muted">Network error while loading ungrouped words.</p>';
+      }
+    }
+
+    async function viewGroupInline(labelEnc, btn) {
+      if (!BOOK_ID) return alert('Please upload the CSV file first');
+      var panelId = 'inlineGroup_' + String(labelEnc || '').replace(/[^a-zA-Z0-9_-]/g, '_');
+      var panel = document.querySelector('#' + panelId);
+      if (!panel) return;
+
+      var isOpen = panel.style.display !== 'none';
+      document.querySelectorAll('.inlineGroupWords').forEach(function(p){
+        p.style.display = 'none';
+      });
+      document.querySelectorAll('.btnViewGroupInline').forEach(function(b){
+        b.textContent = 'View words';
+      });
+      if (isOpen) return;
+
+      panel.style.display = 'block';
+      panel.innerHTML = '<span class="muted">Loading words...</span>';
+      if (btn) btn.textContent = 'Hide words';
+
+      try {
+        var r = await fetch('/api/groups/' + BOOK_ID + '/' + labelEnc);
+        var data = await r.json();
+        if (!r.ok) {
+          panel.innerHTML = '<span class="muted">Failed to load this group.</span>';
+          return;
+        }
+        var words = data.words || [];
+        if (!words.length) {
+          panel.innerHTML = '<span class="muted">No words in this group.</span>';
+          return;
+        }
+        var html = '<div class="words">';
+        words.forEach(function(w){
+          html += '<span class="chip" title="' + escapeHtml(w.decomposition || '') + '">' + escapeHtml(w.word || '') + '</span>';
+        });
+        html += '</div>';
+        panel.innerHTML = html;
+      } catch (e) {
+        console.error(e);
+        panel.innerHTML = '<span class="muted">Network error.</span>';
+      }
+    }
+
+
+    async function listGroups() {
+      if (!BOOK_ID) return alert('Please upload or select a book first.');
+      const t = $('#groupType')?.value?.trim() || '';
+      const q = $('#groupQ')?.value?.trim() || '';
+      const qs = new URLSearchParams();
+      if (t) qs.set('type', t);
+      if (q) qs.set('q', q);
+      const url = `/api/books/${BOOK_ID}/groups` + (qs.toString() ? `?${qs}` : '');
+      const r = await fetch(url);
+      const data = await r.json();
+      if (!r.ok) return alert(JSON.stringify(data));
+      renderGroupsBrief(data.groups, data.ungrouped_count);
+    }
+    async function showUngrouped() {
+      if (!BOOK_ID) return alert('Please select a book first.');
+      const r = await fetch(`/api/books/${BOOK_ID}/ungrouped`);
+      const data = await r.json();
+      if (!r.ok) return alert(JSON.stringify(data));
+
+      const lines = (data.items || []).map(x => `${x.word}  —  ${x.decomposition || ''}`);
+      alert(`Ungrouped ${data.count} items\n\n` + lines.join('\n'));
+    }
+
+    async function rebuild() {
+      if (!BOOK_ID) { alert('Please upload the CSV file first'); return; }
+      var r = await fetch('/api/books/' + BOOK_ID + '/morph/rebuild', { method:'POST' });
+      var data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+      renderGroupsBrief(data.groups);
+      alert('The grouping has been rebuilt');
+    }
+
+    async function viewGroup(labelEnc) {
+      if (!BOOK_ID) { alert('Please upload the CSV file first'); return; }
+      var r = await fetch('/api/groups/' + BOOK_ID + '/' + labelEnc);
+      var data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+      var words = (data.words || []).map(function(w){ return w.word; });
+      alert(data.label + ' group (' + words.length + ' items):\n' + words.join(', '));
+    }
+    async function loadLibrary() {
+      const r = await fetch('/api/books');
+      const data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+      const box = $('#library');
+      if (!data.items || !data.items.length) {box.innerHTML = '<p class="muted">No books uploaded yet</p>';return;}
+      let html = '';
+      data.items.forEach(b => {
+        html += `<div style="margin:4px 0">
+            <strong>${b.source || b.bookId}</strong>
+            <span class="pill">groups: ${b.group_count}</span>
+            <span class="muted">${b.created_at}</span>
+            <button data-bid="${b.bookId}" class="btnUseBook">Use</button>
+
+        </div>`;
+  });
+      box.innerHTML = html;
+      document.querySelectorAll('.btnUseBook').forEach(btn => {
+        btn.addEventListener('click', () => {
+        setBookId(btn.getAttribute('data-bid'));
+        alert('Switched to bookId=' + BOOK_ID);
+      });
+    });
+  }
+      $('#btnLib').addEventListener('click', loadLibrary);
+    // 今日复习
+    async function loadToday() {
+      if (!BOOK_ID) { alert('Please upload the CSV file first'); return; }
+      var r = await fetch('/api/review/today/' + BOOK_ID);
+      var data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+
+      var dueCount = (data.stats && typeof data.stats.due_count === 'number') ? data.stats.due_count : ((data.due || []).length);
+      var quota = (data.stats && data.stats.new_quota != null) ? data.stats.new_quota : '-';
+      var avail = (data.stats && data.stats.new_available != null) ? data.stats.new_available : '-';
+      $('#todayStats').textContent = 'expiration ' + dueCount + ' | New Card Limit ' + quota + ' | New card available ' + avail;
+
+      // render due
+      var dueBox = $('#dueList'); dueBox.innerHTML = '';
+      (data.due || []).forEach(function(x){ dueBox.appendChild(makeWordRow(x.word)); });
+
+      // render new
+      var newBox = $('#newList'); newBox.innerHTML = '';
+      (data.new || []).forEach(function(x){ newBox.appendChild(makeWordRow(x.word)); });
+    }
+  function makeWordRow(word) {
+    var tpl = document.querySelector('#wordRow');
+    var frag = tpl.content.cloneNode(true);
+    var rowEl = frag.firstElementChild;
+    rowEl.classList.add('wordReviewRow');
+    var resultEl = rowEl.querySelector('.result');
+    var explainBox = rowEl.querySelector('.explainBox');
+
+    rowEl.querySelector('.word').textContent = word;
+    rowEl.querySelector('.word').style.cursor = 'pointer';
+    rowEl.querySelector('.word').title = 'Click to chat with AI';
+    rowEl.querySelector('.word').addEventListener('click', ()=> openChat(word));
+
+  // 评分：save rating and give immediate visual feedback
+    rowEl.querySelectorAll('.grades button').forEach(function(btn){
+      btn.addEventListener('click', async function(){
+        var grade = Number(btn.getAttribute('data-g'));
+        var gradeButtons = rowEl.querySelectorAll('.grades button');
+
+        gradeButtons.forEach(function(b){
+          b.classList.remove('selectedGrade');
+          b.classList.remove('savingGrade');
+          b.disabled = true;
+        });
+        btn.classList.add('savingGrade');
+        resultEl.className = 'muted result';
+        resultEl.textContent = 'Saving...';
+
+        try {
+          var r = await fetch('/api/review/' + BOOK_ID, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ word: word, grade: grade })
+          });
+          var data = null; try { data = await r.json(); } catch(e){}
+
+          if (r.ok) {
+            gradeButtons.forEach(function(b){ b.classList.remove('selectedGrade'); });
+            btn.classList.add('selectedGrade');
+
+            window.LOW_SCORE_WORDS = window.LOW_SCORE_WORDS || new Set();
+            if (grade < 4) {
+              window.LOW_SCORE_WORDS.add(word);
+              resultEl.className = 'result reviewSaved';
+              resultEl.textContent = '✓ saved · added to quiz';
+            } else {
+              window.LOW_SCORE_WORDS.delete(word);
+              resultEl.className = 'result reviewSaved';
+              resultEl.textContent = '✓ saved';
+            }
+
+            if (data && data.due_at) {
+              resultEl.title = 'Next review: ' + new Date(data.due_at).toLocaleString();
+            }
+          } else {
+            resultEl.className = 'result reviewError';
+            resultEl.textContent = '✗ save failed';
+            console.error('Review failed:', data);
+          }
+        } catch(err){
+          resultEl.className = 'result reviewError';
+          resultEl.textContent = '✗ network error';
+          console.error(err);
+        } finally {
+          gradeButtons.forEach(function(b){
+            b.disabled = false;
+            b.classList.remove('savingGrade');
+          });
+        }
+     });
+   });
+  // 讲解（新版：把 Explanation 推送到右侧 AI Chat）
+    rowEl.querySelector('.explain').addEventListener('click', async function(){
+      if (!BOOK_ID) return alert('Please select book first');
+      try {
+        // 1) 从后端拿解释数据
+        const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(word)}/explain?ai=1`);
+        const data = await r.json();
+        if (!r.ok) { return alert(JSON.stringify(data)); }
+
+        const ex = data.explain || {};
+        if (Array.isArray(data.examples) && !Array.isArray(ex.examples)) ex.examples = data.examples;
+
+        // 清洗
+        if (Array.isArray(ex.examples)) ex.examples = normalizeExamplesEnOnly(ex.examples);
+        if (ex.hook) ex.hook = cleanMnemonic(ex.hook);
+
+       // 2) 总是切换到该单词的 Chat（不再按需判断）
+        await openChat(word);
+
+        // 3) 推送消息并滚动聚焦到聊天输入框
+        const text = formatExplanationForChat(word, ex);
+        pushAssistantMessage(text);
+        scrollToChat();
+      } catch (e) {
+        console.error(e);
+        alert('Failed to load explanation');
+      }
+    });
+    if (explainBox) explainBox.style.display = 'none';
+    return rowEl;
+  }
+
+  // ----- normalization helpers for Mnemonic/Examples -----
+  function cleanMnemonic(s){
+    if (!s) return '';
+    return String(s)
+      .replace(/^\s*(?:Mnemonic|Mnemonics?|记忆|联想|助记)\s*[:：-]?\s*/i, '')
+      .trim();
+  }
+
+  // Keep only English examples (strip "Examples:" prefix and any trailing zh part)
+  function normalizeExamplesEnOnly(examples){
+    return (examples || [])
+      .map(e => {
+        let en = '';
+        if (typeof e === 'string') {
+          const cleaned = e.replace(/^\s*(?:Examples?|例句)\s*[:：]\s*/i, '').trim();
+          en = cleaned.split(/\s*(?:—+|–+|-+)\s*/)[0].trim();
+        } else if (e && typeof e === 'object') {
+          en = String(e.en || '').replace(/^\s*(?:Examples?|例句)\s*[:：]\s*/i, '').trim();
+        }
+        return en || null;
+      })
+      .filter(Boolean)
+      .filter((v, i, a) => a.indexOf(v) === i);
+  }
+
+  // --- helper to escape HTML and structured explanation renderer ---
+  const esc = (s) => (s == null ? '' : String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])));
+  function renderExplain(box, ex){
+    const lines = [];
+    if (ex.decomposition) lines.push(`<div><b>Decomposition:</b> ${esc(ex.decomposition)}</div>`);
+    if (ex.root || ex.affix) lines.push(`<div><b>Group:</b> ${esc(ex.root || ex.affix)}</div>`);
+    if (ex.hook) lines.push(`<div><b>Mnemonic:</b> ${esc(ex.hook)}</div>`);
+    if (Array.isArray(ex.collocations) && ex.collocations.length){
+      lines.push(`<div><b>Collocations:</b><ul>` + ex.collocations.map(c=>`<li>${esc(c)}</li>`).join('') + `</ul></div>`);
+    }
+    if (Array.isArray(ex.pitfalls) && ex.pitfalls.length){
+      lines.push(`<div><b>Pitfalls:</b><ul>` + ex.pitfalls.map(p=>`<li>${esc(p)}</li>`).join('') + `</ul></div>`);
+    }
+    if (Array.isArray(ex.examples) && ex.examples.length){
+      lines.push(`<div><b>Examples:</b><ul>` + ex.examples.map(e=>{
+        const en = typeof e === 'string' ? e : (e && e.en) || '';
+        return en ? `<li>${esc(en)}</li>` : '';
+      }).join('') + `</ul></div>`);
+    }
+    if (!lines.length) lines.push('<div class="muted">No explanation available.</div>');
+    box.innerHTML = `<div class="exp">${lines.join('')}</div>`;
+  }
+
+let CURRENT_CHAT_WORD = '';
+let CHAT_MESSAGES = [];
+
+  // Choose a reasonable default word if user hasn't selected one yet
+  function pickDefaultWord(){
+    if (CURRENT_CHAT_WORD) return CURRENT_CHAT_WORD;
+    if (typeof getTodaysWords === 'function'){
+      const todays = getTodaysWords();
+      if (Array.isArray(todays) && todays.length){
+        return todays[0];
+      }
+    }
+    return '';
+  }
+
+  // Format chat text with minimal markup for display
+  function formatChatText(text){
+    if (!text) return '';
+    return escapeHtml(text)
+      .replace(/\n/g, '<br>')
+      .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+      .replace(/(^|<br>)(\d+\))\s*/g, '$1<b>$2</b> ')
+      .replace(/\s+(\d+\))\s*/g, '<br><b>$1</b> ')
+      .replace(/(^|<br>)-\s+/g, '$1• ');
+  }
+
+  function renderChatMsgs(msgs){
+    CHAT_MESSAGES = msgs || [];
+    const box = document.querySelector('#chatMsgs');
+    box.innerHTML = (msgs || []).map(m=>{
+      const isUser = m.role === 'user';
+      return `<div style="display:flex; margin:6px 0; ${isUser?'justify-content:flex-end':''}">`
+        + `<div style=\"max-width:80%; padding:8px 10px; border-radius:12px; ${isUser?'background:#dff4ff;':'background:#f6f6f6;'}\">`
+        + formatChatText(m.content)
+        + `</div></div>`;
+    }).join('');
+    box.scrollTop = box.scrollHeight;
+    if (typeof updateChatTitle === 'function') updateChatTitle();
+  }
+  function updateChatTitle(){
+    const titleEl = document.querySelector('#chatTitle');
+    if (!titleEl) return;
+    titleEl.textContent = 'AI Chat' + (CURRENT_CHAT_WORD ? '：' + CURRENT_CHAT_WORD : ' (free mode)');
+  }
+  function scrollToChat(){
+    const panel = document.querySelector('#chatPanel');
+    if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    const input = document.querySelector('#chatInput');
+    if (input) input.focus();
+  }
+  function formatExplanationForChat(word, ex){
+    const escText = (s) => String(s == null ? '' : s);
+    const lines = [];
+    lines.push(`Explanation for "${word}":`);
+    if (ex.decomposition) lines.push(`1) Decomposition: ${escText(ex.decomposition)}`);
+
+    const groupText = ex.root || ex.affix || (ex.group && ex.group.label);
+    if (groupText) {
+      let neigh = '';
+      if (ex.group && Array.isArray(ex.group.neighbors) && ex.group.neighbors.length) {
+        neigh = ` → ${ex.group.neighbors.slice(0,3).join(', ')}`;
+      }
+      lines.push(`2) Group: ${escText(groupText)}${neigh}`);
+    }
+
+    if (ex.hook || (ex.mnemonic && (ex.mnemonic.zh || ex.mnemonic.en))) {
+      const zh = ex.mnemonic && ex.mnemonic.zh ? ex.mnemonic.zh : '';
+      const en = ex.mnemonic && ex.mnemonic.en ? ex.mnemonic.en : '';
+      const hook = ex.hook || (zh || en);
+      lines.push(`3) Mnemonic: ${escText(hook)}`);
+    }
+
+  // Confusables（或 Pitfalls 兜底）
+    let conf = [];
+    if (Array.isArray(ex.confusables) && ex.confusables.length){
+      conf = ex.confusables.slice(0,3).map(c => {
+        if (typeof c === 'string') return c;
+        if (c && typeof c === 'object') return `${c.word}${c.tip ? ' ('+c.tip+')' : ''}`;
+        return '';
+      }).filter(Boolean);
+    } else if (Array.isArray(ex.pitfalls) && ex.pitfalls.length){
+      conf = ex.pitfalls.slice(0,3);
+    }
+    if (conf.length) lines.push(`4) Confusables: ${conf.join('; ')}`);
+
+  // Usage（从 usage 字段优先，其次 examples/collocations 兜底）
+    let usageLine = '';
+    if (ex.usage && (ex.usage.sentence || ex.usage.collocation)) {
+      const sent = ex.usage.sentence ? ex.usage.sentence : '';
+      const coll = ex.usage.collocation ? ` (collocation: ${ex.usage.collocation})` : '';
+      usageLine = (sent + coll).trim();
+    } else {
+      const examp = Array.isArray(ex.examples) && ex.examples.length ? ex.examples[0] : '';
+      const coll0 = Array.isArray(ex.collocations) && ex.collocations.length ? ` (collocation: ${ex.collocations[0]})` : '';
+      usageLine = `${examp || ''}${coll0}`;
+    }
+    if (usageLine) lines.push(`5) Usage: ${escText(usageLine)}`);
+
+    return lines.join('\n');
+  }
+
+  async function ensureChatForWord(word){
+    // 若当前聊天不是这个词，就先打开它（会加载历史）
+    if (CURRENT_CHAT_WORD !== word){
+      await openChat(word);
+    }
+  }
+
+  function pushAssistantMessage(content){
+    const msgs = (CHAT_MESSAGES || []).slice();
+    msgs.push({ role: 'assistant', content });
+    renderChatMsgs(msgs);
+  }
+  // ======= Suggestion Chips (definitions, render, click handler) =======
+  const SUGGESTION_TEMPLATES = [
+    { id: 'quiz3', label: '3-question quiz',
+      prompt: "Make a 3-item micro-quiz about '{word}': 1) cloze, 2) MCQ (3 options), 3) collocation question. " },
+    { id: 'confuse', label: 'Analysis of Easily Confused Terms',
+      prompt: "Compare '{word}' with 2 confusable words. For each: one-line difference + one example collocation. " },
+    { id: 'examples2', label: 'Create 2 example sentences',
+      prompt: "Write 2 short A2-level example sentences using '{word}', different meanings if applicable." },
+    { id: 'family5', label: 'Word Family Expansion',
+      prompt: "List up to 5 frequent family words related to '{word}', each with a very short gloss (1-3 words)." },
+    { id: 'regen_explain', label: 'Alternative explanation',
+      prompt: "Regenerate the earlier 5-part explanation for '{word}' in a different concise style (still Decomposition, Group, Mnemonic, Confusables, Usage)." },
+    { id: 'regen_quiz', label: 'Test another version',
+      prompt: "Generate another 3-item micro-quiz for '{word}' that differs from prior quiz (avoid repeating same stems)." }
+  ];
+
+  function renderChipsForWord(word){
+    const bar = document.getElementById('chipBar');
+    if(!bar) return;
+    bar.innerHTML = '';
+    if (!word) {
+      const hint = document.createElement('div');
+      hint.textContent = 'Select a word to see quick actions';
+      hint.className = 'muted';
+      bar.appendChild(hint);
+      return;
+    }
+    SUGGESTION_TEMPLATES.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'chip-btn';
+      btn.dataset.cid = t.id;
+      btn.textContent = t.label;
+      btn.addEventListener('click', async () => { await onChipClick(t, word, btn); });
+      bar.appendChild(btn);
+    });
+  }
+
+  async function onChipClick(template, word, btnEl){
+  if (!BOOK_ID) return alert('Please select book first');
+
+  btnEl.classList.add('sending');
+  const originalText = btnEl.textContent;
+  btnEl.textContent = 'Sending...';
+
+  try {
+    // 只有切换到另一个单词时，才重新加载历史
+    if (CURRENT_CHAT_WORD !== word) {
+      await openChat(word);
+    }
+
+    // 保存当前聊天内容，避免被后端返回的新 history 覆盖
+    const beforeMsgs = (CHAT_MESSAGES || []).slice();
+
+    const prompt = template.prompt.replace(/\{word\}/g, word);
+    console.log('[chip-send]', template.id, prompt.slice(0, 60));
+
+    const url = `/api/vocab/${BOOK_ID}/${encodeURIComponent(word)}/chat`;
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ intent: template.id, message: prompt })
+    });
+
+    const data = await r.json();
+    if (!r.ok) throw new Error(JSON.stringify(data));
+
+    const serverMsgs = Array.isArray(data.messages) ? data.messages : [];
+
+    // 关键：合并，而不是直接 renderChatMsgs(serverMsgs)
+    let merged = beforeMsgs.slice();
+
+    if (serverMsgs.length > beforeMsgs.length) {
+      merged = beforeMsgs.concat(serverMsgs.slice(beforeMsgs.length));
+    } else if (serverMsgs.length) {
+      // 兜底：如果后端只返回少量新消息，就追加最后一条 assistant
+      const last = serverMsgs[serverMsgs.length - 1];
+      if (last) merged.push(last);
+    }
+
+    renderChatMsgs(merged);
+
+    if (typeof scrollToChat === 'function') scrollToChat();
+  } catch (err) {
+    console.error('Chip send error', err);
+    btnEl.classList.add('error');
+    alert('Failed to send:' + (err.message || JSON.stringify(err)));
+  } finally {
+    btnEl.classList.remove('sending');
+    btnEl.textContent = originalText;
+    setTimeout(()=>btnEl.classList.remove('error'), 2000);
+  }
+}
+
+  // Fallback feedback synthesis for words
+  function synthesizeWordFallback(word){
+    const w = (word||'').toLowerCase();
+    const fb = { strengths: [], issues: [], tips: [], next_steps: [] };
+    if (w.endsWith('er')){
+      fb.strengths.push("'-er' often means a person/thing (runner, teacher)");
+      fb.issues.push({code:'suffix-er', detail:"Not all verbs make natural -er nouns (avoid *botherer)"});
+      fb.tips.push("Check if the -er form exists in a dictionary before using it");
+    } else if (w.endsWith('tion')){
+      fb.strengths.push("'-tion' makes nouns from verbs (action, connection)");
+      fb.issues.push({code:'suffix-tion', detail:"Watch collocations with -tion nouns (take action, make a decision)"});
+      fb.tips.push("Memorize common verb + -tion collocations");
+    } else if (w.endsWith('able')){
+      fb.strengths.push("'-able' adjectives mean 'can be ...' (readable)");
+      fb.issues.push({code:'suffix-able', detail:"Use with 'be': is/are + adjective (The file is readable)"});
+      fb.tips.push("Avoid mixing -able adjective with verb-ed without 'be'");
+    } else {
+      fb.strengths.push("Use collocations and examples to reinforce usage");
+      fb.tips.push("Write 2 short examples with the word now");
+    }
+    fb.next_steps.push({type:'quiz', target:'confuse', k:3, desc:'Retake 3 questions (focus: confuse)'});
+    fb.next_steps.push({type:'review', after_hours:24, desc:'Review after 24 hours'});
+    return fb;
+  }
+
+  async function generateFeedbackFor(word){
+    if (!BOOK_ID) return alert('Please select a book first');
+    if (!word) return alert('Please click on a word first');
+    try{
+      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(word)}/feedback`, { method:'POST' });
+      const data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+      // Use fallback synthesis if all blocks empty
+      const emptyBlocks = !(data.strengths?.length) && !(data.issues?.length) && !(data.tips?.length);
+      const merged = emptyBlocks ? (() => {
+        const fb = synthesizeWordFallback(word);
+        return {
+          mastery: (typeof data.mastery === 'number') ? data.mastery : 0.7,
+          strengths: fb.strengths,
+          issues: fb.issues,
+          tips: fb.tips,
+          next_steps: (Array.isArray(data.next_steps) && data.next_steps.length) ? data.next_steps : fb.next_steps
+        };
+      })() : data;
+
+      const lines = [];
+      lines.push(`Mastery: ${(merged.mastery*100|0)}%`);
+      if (merged.strengths?.length){
+        lines.push('Strengths:'); merged.strengths.forEach(s=>lines.push('- '+s));
+      }
+      if (merged.issues?.length){
+        lines.push('Issues:'); merged.issues.forEach(it=>lines.push(`- ${it.code||''} ${it.detail||''} ${it.evidence?('('+it.evidence+')'):''}`));
+      }
+      if (merged.tips?.length){
+        lines.push('Tips:'); merged.tips.forEach(t=>lines.push('- '+t));
+      }
+      if (merged.next_steps?.length){
+        lines.push('Next:'); merged.next_steps.forEach(n=>lines.push('- '+formatNextStepLine(n)));
+      }
+      pushAssistantMessage(lines.join('\n'));
+      if (typeof scrollToChat === 'function') scrollToChat();
+    }catch(e){
+      console.error(e); alert('Network error');
+    }
+  }
+  async function openChat(word){
+    if (!BOOK_ID) return alert('Please select a book first');
+    CURRENT_CHAT_WORD = word || '';
+    updateChatTitle();
+    const box = document.querySelector('#chatMsgs');
+    box.innerHTML = 'Loading history...';
+    try {
+      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(CURRENT_CHAT_WORD)}/chat/history`);
+      const data = await r.json();
+      if (!r.ok) { box.textContent = JSON.stringify(data); return; }
+      renderChatMsgs(data.messages || []);
+      document.querySelector('#chatInput').focus();
+      renderChipsForWord(CURRENT_CHAT_WORD);
+      updateChatTitle();
+    } catch (e) {
+      console.error(e); box.textContent = 'Failed to load';
+    }
+  }
+
+  document.querySelector('#chatSend').addEventListener('click', async ()=>{
+    const input = document.querySelector('#chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+    if (!CURRENT_CHAT_WORD) {
+      const def = pickDefaultWord();
+      if (def) {
+        // silently adopt a default word so user can chat immediately
+        await openChat(def);
+      } else {
+        return alert('Please load today’s tasks or click a word to begin.');
+      }
+    }
+    const btn = document.querySelector('#chatSend');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    try {
+      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(CURRENT_CHAT_WORD)}/chat`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ message: text })
+      });
+      const data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+      input.value = '';
+      renderChatMsgs(data.messages || []);
+    } catch(e){ console.error(e); alert('Network Anomaly'); }
+    finally {
+      btn.disabled = false; btn.textContent = 'Send';
+      updateChatTitle();
+    }
+  });
+
+  document.querySelector('#chatInput').addEventListener('keydown', (e)=>{
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.querySelector('#chatSend').click(); }
+  });
+
+  document.querySelector('#chatReset').addEventListener('click', async ()=>{
+    if (!CURRENT_CHAT_WORD) {
+      const def = pickDefaultWord();
+      if (def) { await openChat(def); }
+      else return alert('Please load today’s tasks or click a word to begin');
+    }
+    updateChatTitle();
+    if (!confirm('Start a new conversation with this word?')) return;
+    try {
+      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(CURRENT_CHAT_WORD)}/chat`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ message: '(New Conversation)', force_new: true })
+      });
+      const data = await r.json();
+      if (!r.ok) { alert(JSON.stringify(data)); return; }
+      renderChatMsgs(data.messages || []);
+    } catch(e){ console.error(e); alert('Network Anomaly'); }
+  });
+  var BOOK_ID = localStorage.getItem('bookId') || '';
+  document.querySelector('#btnFeedback').addEventListener('click', async ()=>{
+    if (!CURRENT_CHAT_WORD){
+      const def = pickDefaultWord();
+      if (def) { await openChat(def); updateChatTitle(); }
+    }
+    generateFeedbackFor(CURRENT_CHAT_WORD);
+  });
+  function setBookId(id){
+    BOOK_ID = id || '';
+    localStorage.setItem('bookId', BOOK_ID);
+    document.querySelector('#bookId').textContent = BOOK_ID || '(Not selected)';
+  }
+
+// When the page loads, display the last bookId; if available, refresh the group/today's review section.
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelector('#bookId').textContent = BOOK_ID || '(Not selected)';
+    if (typeof updateChatTitle === 'function') updateChatTitle();
+    if (BOOK_ID) {
+    // Optional: Automatically refresh one group or “Today's Review”—select one option only.
+    // listGroups();
+    // loadToday();
+    // or Refresh the library list to easily see the status of the “Use” button.
+      if (typeof loadLibrary === 'function') loadLibrary();
+    }
+  });
+
+    // Event binding (safe)
+    function on(sel, event, handler){
+      const el = document.querySelector(sel);
+      if (!el) { console.warn('Missing element:', sel); return; }
+      el.addEventListener(event, handler);
+    }
+
+    // Bind after DOM is ready (extra safe)
+    document.addEventListener('DOMContentLoaded', () => {
+      on('#btnUpload', 'click', uploadCSV);
+      on('#btnListGroups', 'click', listGroups);
+      on('#btnToday', 'click', loadToday);
+      // Note: #btnFilterGroups may not exist in current UI; this will no-op instead of crashing.
+      on('#btnFilterGroups', 'click', listGroups);
+
+      on('#btnSummary', 'click', async () => {
+        if (!BOOK_ID) return alert('First, choose a book.');
+        const r = await fetch(`/api/summary/${BOOK_ID}?period=week`, {method:'POST'});
+        const data = await r.json();
+        if (!r.ok) return alert(JSON.stringify(data));
+        const s = data.summary;
+        $('#summaryBox').textContent =
+          `Highlights:\n- ${s.highlights.join('\n- ')}\n\nIssues:\n- ${s.issues.join('\n- ')}\n\nAdvice:\n- ${s.advice.join('\n- ')}\n\nRecommended focus roots: ${s.focus_roots.join(', ')}`;
+      });
+      on('#btnStartSessionQuiz', 'click', () => {
+          const lowWords = getLowScoreWords();
+          const words = lowWords.length ? lowWords : getTodaysWords();
+          startSessionQuiz(words, 10);
+      });
+      on('#btnClearQuiz', 'click', clearSessionQuiz);
+    });
+
+    document.querySelectorAll('.btnUseBook').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ setBookId(btn.getAttribute('data-bid')); alert('Switched to bookId=' + BOOK_ID); });
+    });
+
+function escapeHtml(s){
+    return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  }
+ // 启动第一轮（题库+兜底），后端返回 paper: [ {id, stem, options?, type, words} ... ]
+  async function startSessionQuiz(words = [], total = 10){
+    if (!BOOK_ID) return alert('Please select a book first');
+    // 没传就自动用“今日学习”的词（due+new）
+    if (!Array.isArray(words) || words.length === 0) {
+      words = getTodaysWords();
+    }
+    if (words.length === 0) {
+      // 兜底：可选仍用你原来的 3 个示例词
+      words = ["bother","action","ability"];
+    }
+
+    try{
+      // 如果没显式传 words，就取今天的 new+due（需要下面的小工具函数）
+      if (!Array.isArray(words) || words.length === 0) {
+      if (window.CURRENT_CHAT_WORD) words = [CURRENT_CHAT_WORD];
+      }
+      if (!Array.isArray(words) || words.length === 0) {
+        if (typeof getTodaysWords === 'function') {
+          words = getTodaysWords();
+        }
+      }
+      // LLM/题库都能接受的第一轮接口
+      const r = await fetch('/api/session/quiz/start', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ words, total })
+      });
+      const data = await r.json();
+      if(!r.ok) throw new Error(JSON.stringify(data));
+      // 1) Store session id globally for later submit
+      window.__QUIZ_SESSION_ID__ = data.session_id || data.sid || data.sessionId || '';
+
+      // 后端可能叫 paper 或 items，这里两种都兼容
+      const items = data.paper || data.items || [];
+      renderSessionQuiz(items);
+
+      // 滚动到卡片
+      document.querySelector('#quizCard')?.scrollIntoView({behavior:'smooth', block:'start'});
+    }catch(e){
+      console.error(e);
+      alert('Quiz start failed: ' + (e.message || e));
+    }
+  }
+
+
+  function renderSessionQuiz(items){
+    const box = document.getElementById('sessionQuiz');
+      if(!items || !items.length){
+        box.innerHTML = '<div class="muted">No quiz items.</div>';
+        return;
+      }
+      let html = '<div class="card-body"><ol id="quizList" style="padding-left:20px;">';
+      items.forEach((q,i)=>{
+        const name = `q_${i}`;
+        const words = Array.isArray(q.words) ? q.words.join(',') : '';
+        html += `<li data-id="${q.id}" data-type="${q.type || ''}" data-words="${words}" style="margin:10px 0;">
+          <div class="stem" style="font-weight:600;margin-bottom:4px;">${escapeHtml(String(q.stem||''))}</div>`;
+        if (Array.isArray(q.options) && q.options.length){
+          // 2) Render radios with option index for value
+          q.options.forEach((opt, idx)=>{
+            html += `<label style="display:block;margin:4px 0;">
+              <input type="radio" name="${name}" value="${idx}"> ${escapeHtml(String(opt))}
+            </label>`;
+          });
+        } else {
+          html += `<input type="text" name="${name}" placeholder="Type your answer">`;
+        }
+        html += `</li>`;
+      });
+      html += `</ol>
+        <button id="btnSubmitQuiz" class="btn">Submit</button>
+      </div>`;
+      box.innerHTML = html;
+      document.getElementById('btnSubmitQuiz').onclick = submitSessionQuiz;
+  }
+
+
+  // 3) 收集答案并提交；把结果以一条助手消息形式“汇报”，后续再换成反馈卡 UI
+  async function submitSessionQuiz(){
+    const lis = Array.from(document.querySelectorAll('#quizList > li'));
+    const answers = lis.map((li, i)=>{
+      const qid = li.getAttribute('data-id');
+      const radios = li.querySelectorAll('input[type="radio"]');
+      let val = '';
+      if (radios.length){
+        const checked = Array.from(radios).find(r=>r.checked);
+        val = checked ? parseInt(checked.value, 10) : '';
+      } else {
+        val = (li.querySelector('input[type="text"]').value || '').trim();
+      }
+      return { id: qid, answer: val };
+    });
+
+    try{
+      const r = await fetch('/api/session/quiz/submit', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          book_id: BOOK_ID,   // 提交需要book_id
+          session_id: window.__QUIZ_SESSION_ID__ || '',
+          answers
+        })
+      });
+      const data = await r.json();
+      if(!r.ok) throw new Error(JSON.stringify(data));
+      const fb = data.feedback || {};
+      // Quiz results are now written back to the same learner state on the backend.
+      // Remove words from the local low-score set if the quiz feedback says they are strong enough.
+      if (window.LOW_SCORE_WORDS && fb.by_word) {
+        Object.entries(fb.by_word).forEach(function(entry){
+          var w = entry[0];
+          var info = entry[1] || {};
+          var score = Number(info.score || 0);
+          if (score >= 0.7) window.LOW_SCORE_WORDS.delete(w);
+        });
+      }
+      // Render a rich feedback card directly inside the quiz panel
+      renderFeedbackCardIntoQuiz(fb);
+      // Also push a brief line into chat for history
+      const headerLine = `📊 Today Mastery: ${(fb.mastery*100|0)}% (${fb.correct||0}/${fb.total||0}) — ${fb.summary_line||''}`;
+      if (typeof pushAssistantMessage === 'function') {
+        pushAssistantMessage(headerLine);
+      }
+      if (typeof scrollToChat === 'function') scrollToChat();
+    }catch(e){
+      console.error(e); alert('Submit failed');
+    }
+  }
+// 取“高错词”（两次以上错误 或 得分低于 0.6）
+function getBadWordsFromFeedback(threshold = 0.6) {
+  const bw = (window.LAST_FEEDBACK && window.LAST_FEEDBACK.by_word) || {};
+  const picked = [];
+  Object.entries(bw).forEach(([w, info = {}]) => {
+    const err = Number(info.err ?? info.count_err ?? 0);
+    const score = Number(info.score ?? 0);
+    if (err >= 2 || score < threshold) picked.push(w);
+  });
+  return picked;
+}
+
+// 第二轮：只针对高错词出题（默认每个词 1 题）
+async function startFollowupQuiz(words = [], perWord = 1) {
+  if (!BOOK_ID) return alert('Please select a book first');
+
+  // 如果没传 words，就自动从上一轮反馈里挑（>=2次错误 或 得分<0.6）
+  if (!Array.isArray(words) || words.length === 0) {
+    words = getBadWordsFromFeedback(0.6);
+  }
+  if (!words.length) return alert('No high-error words to drill.');
+
+  try {
+    // ✅ 路径一定要是这个（和后端保持一致）
+    const r = await fetch('/api/session/quiz/followup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // 每个词几道题由 per_word 控制（后端已支持），你想 1 题就传 1
+      body: JSON.stringify({ book_id: BOOK_ID, words, per_word: perWord })
+    });
+
+    // 先尝试读 json，读不到再读 text 以便排错
+    let data = null, txt = '';
+    try { data = await r.json(); } catch (e) { txt = await r.text(); }
+
+    if (!r.ok) {
+      const detail = data ? JSON.stringify(data) : (txt || (r.status + ' ' + r.statusText));
+      throw new Error(detail);
+    }
+
+    // 后端返回 { session_id, paper: [...] }；兼容你已有渲染函数
+    const items = (data && (data.paper || data.items)) || [];
+    renderSessionQuiz(items);            // <-- 你页面里已经在用的渲染函数
+    window.__SESSION_ID__ = data.session_id; // 提交时还会用到这个
+
+    // 可选：把卡片滚到视口
+    document.querySelector('#quizCard')?.scrollIntoView({ behavior:'smooth', block:'start' });
+
+  } catch (e) {
+    console.error(e);
+    alert('Follow-up start failed: ' + (e.message || e));
+  }
+}
+
+
+  // 4) 清空 quiz 卡片内容
+  function clearSessionQuiz(){
+    const box = document.getElementById('sessionQuiz');
+    if (box) box.innerHTML = '';
+  }
+
+  // Render feedback card into the quiz area
+  function renderFeedbackCardIntoQuiz(fb){
+    const box = document.getElementById('sessionQuiz');
+    if (!box) return;
+    const masteryPct = Math.round((fb.mastery || 0)*100);
+    let html = `<div class="card-body">
+      <h4 style="margin:4px 0;">Today’s Feedback</h4>
+      <div style="margin:6px 0 10px 0;">
+        <div><b>Mastery:</b> ${masteryPct}% (${fb.correct||0}/${fb.total||0})</div>
+        ${fb.summary_line ? `<div class="muted" style="margin-top:4px;">${escapeHtml(fb.summary_line)}</div>` : ''}
+      </div>
+      <div style="display:flex; gap:16px; flex-wrap: wrap;">
+        <div style="flex:2; min-width:260px;">
+          <h5 style="margin:6px 0;">Wrong-Answer Explanation</h5>
+          ${Array.isArray(fb.explanations) && fb.explanations.length ? fb.explanations.map(ex=>{
+            const ua = escapeHtml(String(ex.user_answer ?? ''));
+            const ca = escapeHtml(String(ex.correct ?? ''));
+            const why = escapeHtml(String(ex.why ?? ''));
+            const ev = ex.evidence ? `<div style="color:#666;">Example:${escapeHtml(String(ex.evidence))}</div>` : '';
+            const ok = ex.ok === true;
+            return `<div style="border:1px solid #eee; border-radius:8px; padding:8px; margin-bottom:8px; background:${ok?'#f6fff8':'#fff7f7'}">
+              <div style="font-weight:600;">${escapeHtml(String(ex.id||''))}</div>
+              <div>Your answer:<b>${ua}</b>　Correct:<b>${ca}</b></div>
+              <div>Reason:${why}</div>
+              ${ev}
+            </div>`;
+          }).join('') : `<div class="muted">No specific explanation</div>`}
+        </div>
+        <div style="flex:1; min-width:220px;">
+          <h5 style="margin:6px 0;">Word-Based Diagnosis</h5>
+          ${fb.by_word ? Object.entries(fb.by_word).map(([w,info])=>{
+            const pct = Math.round(((info && info.score) ? info.score : 0)*100);
+            const issues = (info && info.issues && info.issues.length) ? info.issues.join(', ') : '—';
+            return `<div style="border:1px solid #eee; border-radius:8px; padding:8px; margin-bottom:8px;">
+              <div style="font-weight:600;">${escapeHtml(w)}</div>
+              <div>Score:${pct}%</div>
+              <div>Question:${escapeHtml(issues)}</div>
+            </div>`;
+          }).join('') : `<div class="muted">Wordless-level data</div>`}
+        </div>
+      </div>
+      <div style="margin-top:8px;">
+        <h5 style="margin:6px 0;">Next step</h5>
+        ${(fb.next_steps || []).map((ns, idx)=>{
+          const payload = encodeURIComponent(JSON.stringify(ns));
+          return `<button class="btn" style="margin:0 6px 6px 0;" onclick="handleNextStepFromFeedback('${payload}')">${escapeHtml(ns.desc || 'Next')}</button>`;
+        }).join('')}
+      </div>
+    </div>`;
+    box.innerHTML = html;
+  }
+
+  // Handle clicks from feedback next-steps
+ function handleNextStepFromFeedback(payloadEnc){
+  try{
+    const ns = JSON.parse(decodeURIComponent(payloadEnc));
+    if (!ns || !ns.type) return;
+
+    if (ns.type === 'quiz'){
+      // 如果后端强调 followup 或带了高错词，就走第二轮
+      if (ns.mode === 'followup' || Array.isArray(ns.words)){
+        startFollowupQuiz(ns.words || []);
+      } else {
+        // 否则仍可走第一轮（或 3 题小练）
+        const words = Array.isArray(ns.words) && ns.words.length ? ns.words : getTodaysWords();
+        startSessionQuiz(words, Number(ns.k || ns.count || 3));
+      }
+    } else if (ns.type === 'drill'){
+      const words = Array.isArray(ns.words) && ns.words.length ? ns.words : [];
+      if (!words.length){ alert('There are currently no target words available for practice.'); return; }
+      startFollowupQuiz(words,2);
+    } else if (ns.type === 'review'){
+      const hrs = Number(ns.after_hours || ns.hours || 24);
+      alert(`Scheduled a review in ${hrs} hours.`);
+    } else {
+      alert('Next step: ' + JSON.stringify(ns));
+    }
+    document.querySelector('#quizCard')?.scrollIntoView({behavior:'smooth', block:'start'});
+  }catch(e){
+    console.error(e);
+    alert('Action failed');
+  }
+}
+  // Format next step line for human readability
+  function formatNextStepLine(n){
+    if (!n || typeof n !== 'object') return 'Next step';
+    const t = (n.type || '').toLowerCase();
+    if (n.desc) return String(n.desc);
+    if (t === 'review'){
+      const hrs = Number(n.after_hours || n.hours || 24);
+      return `Review after ${hrs} hours`;
+    }
+    if (t === 'quiz'){
+      const tgt = n.target ? String(n.target) : 'general';
+      const k = Number(n.k || n.count || 3);
+      return `Retake ${k} questions (focus: ${tgt})`;
+    }
+    if (t === 'drill'){
+      const words = Array.isArray(n.words) ? n.words.join(', ') : (n.word || '');
+      return words ? `Micro‑practice for: ${words}` : 'Micro‑practice (3 quick items)';
+    }
+    return n.description || JSON.stringify(n);
+  }
+
+  </script>
+</body>
+</html>

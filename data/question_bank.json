@@ -1,0 +1,94 @@
+[
+  {
+    "id": "Q-B-01",
+    "words": ["bother"],
+    "type": "cloze",
+    "level": "A2",
+    "stem": "Sorry to ____ you so late.",
+    "options": ["bother", "disturb", "interrupt"],
+    "answer": "bother",
+    "explain": "We use 'bother' to say sorry for causing a small problem or trouble."
+  },
+  {
+    "id": "Q-B-02",
+    "words": ["bother"],
+    "type": "collocation",
+    "level": "A2",
+    "stem": "He didn’t ____ to reply.",
+    "options": ["bother", "bother to", "bothering to"],
+    "answer": "bother to",
+    "explain": "'Bother to' is correct because it means he did not take the trouble to do something."
+  },
+  {
+    "id": "Q-B-03",
+    "words": ["bother","disturb"],
+    "type": "confuse",
+    "level": "A2",
+    "stem": "Which best fits: 'Don’t ____ the class.'",
+    "options": ["bother", "disturb"],
+    "answer": "disturb",
+    "explain": "'Disturb' means to interrupt or bother others, so it fits here."
+  },
+
+  {
+    "id": "Q-ACT-01",
+    "words": ["action"],
+    "type": "cloze",
+    "level": "A2",
+    "stem": "We need to take ____ now.",
+    "options": ["action", "transaction", "motion"],
+    "answer": "action",
+    "explain": "'Take action' means to do something to solve a problem."
+  },
+  {
+    "id": "Q-ACT-02",
+    "words": ["action"],
+    "type": "collocation",
+    "level": "A2",
+    "stem": "Common collocation: take ____",
+    "options": ["action", "an action", "the action"],
+    "answer": "action",
+    "explain": "'Take action' is a common phrase meaning to do something."
+  },
+  {
+    "id": "Q-ACT-03",
+    "words": ["action","transaction"],
+    "type": "confuse",
+    "level": "A2",
+    "stem": "Finance context: choose the best word.",
+    "options": ["action", "transaction"],
+    "answer": "transaction",
+    "explain": "'Transaction' means a business deal or exchange of money."
+  },
+
+  {
+    "id": "Q-ABIL-01",
+    "words": ["ability"],
+    "type": "cloze",
+    "level": "A2",
+    "stem": "She has the ____ to solve problems.",
+    "options": ["ability", "skill"],
+    "answer": "ability",
+    "explain": "'Ability' means the natural power or talent to do something."
+  },
+  {
+    "id": "Q-ABIL-02",
+    "words": ["ability"],
+    "type": "collocation",
+    "level": "A2",
+    "stem": "the ____ to learn quickly",
+    "options": ["ability", "ability of"],
+    "answer": "ability",
+    "explain": "'Ability to' is the correct phrase to show someone can do something."
+  },
+  {
+    "id": "Q-ABIL-03",
+    "words": ["ability","skill"],
+    "type": "confuse",
+    "level": "A2",
+    "stem": "Trained proficiency is usually called ____.",
+    "options": ["ability", "skill"],
+    "answer": "skill",
+    "explain": "'Skill' means learned ability after practice or training."
+  }
+]

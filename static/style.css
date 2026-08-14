@@ -1,0 +1,38 @@
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+
+#card-upload {
+  flex: 0 1 360px;
+  min-width: 300px;
+  max-width: 420px;
+}
+
+#Bookstore {
+  flex: 1 1 520px;
+  min-width: 360px;
+  max-width: 620px;
+}
+
+#card-groups {
+  flex: 1 1 420px;
+  min-width: 340px;
+  max-width: none;
+}
+
+#groups{
+  flex: 1;
+  min-width: 500px;
+  max-width: 700px;
+}
+
+#chatPanel {
+  flex: 2;
+  min-width: 500px;
+  max-width: 700px;
+}

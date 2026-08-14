@@ -1,0 +1,122 @@
+[
+  {
+    "id": "F001",
+    "word": "bother",
+    "tag": "confuse-bother-disturb",
+    "level": "A2",
+    "teacher_note": "People often confuse “bother” (the psychological feeling of being annoyed or disturbed) with “disturb” (interrupting an existing activity).",
+    "actionable_tip": "Distinction: bother = to cause annoyance; disturb = to interrupt. Example: Don't disturb the class.",
+    "example_good": "Sorry to bother you so late.",
+    "example_bad": "Don't bother the class."
+  },
+  {
+    "id": "F002",
+    "word": "bother",
+    "tag": "collocation-bother-to-do",
+    "level": "A2",
+    "teacher_note": "The infinitive often follows “bother”: “bother to do” means “to go to the trouble of doing.”",
+    "actionable_tip": "Try making sentences:He didn’t bother to reply.",
+    "example_good": "You don't need to bother to come.",
+    "example_bad": "You don't need to bother come."
+  },
+  {
+    "id": "F003",
+    "word": "bother",
+    "tag": "pattern-bother-ing",
+    "level": "A2",
+    "teacher_note": "“bother doing” is also common, meaning “to not deign to do something” or “not to bother doing something.”",
+    "actionable_tip": "Comparison: bother to do vs bother doing: polite/formal vs colloquial usage.",
+    "example_good": "I won't bother calling him.",
+    "example_bad": "I won't bother to calling him."
+  },
+  {
+    "id": "F004",
+    "word": "",
+    "tag": "suffix-er",
+    "level": "A2",
+    "teacher_note": "-er typically denotes “a person/thing,” but not all verbs can form professions or agents by adding -er.",
+    "actionable_tip": "When encountering a new word, first check the dictionary to see if the derived form actually exists; do not arbitrarily invent words like *botherer.",
+    "example_good": "a runner / a teacher",
+    "example_bad": "a botherer (rarely used, generally not recommended)"
+  },
+  {
+    "id": "F005",
+    "word": "",
+    "tag": "suffix-tion",
+    "level": "A2",
+    "teacher_note": "-tion typically turns verbs into nouns: act → action, but not all verbs can be transformed this way.",
+    "actionable_tip": "Memory: Common nouns ending in -tion are often abstract and have varied usage.",
+    "example_good": "take action",
+    "example_bad": "do an action (Unnatural in most contexts)"
+  },
+  {
+    "id": "F006",
+    "word": "action",
+    "tag": "confuse-action-transaction",
+    "level": "A2",
+    "teacher_note": "\"Action\" means to do something or an activity. \"Transaction\" means a business deal or exchange.",
+    "actionable_tip": "Use \"transaction\" for business and money. Use \"action\" for movies or doing something.",
+    "example_good": "a financial transaction",
+    "example_bad": "an action of money (×)"
+  },
+  {
+    "id": "F007",
+    "word": "ability",
+    "tag": "confuse-ability-skill",
+    "level": "A2",
+    "teacher_note": "\"Ability\" is the power to do something (potential). \"Skill\" is something you learn by practice.",
+    "actionable_tip": "Use: have the ability to do / develop a skill.",
+    "example_good": "She has the ability to solve problems.",
+    "example_bad": "She has the skill to be tall. (Not correct meaning)"
+  },
+  {
+    "id": "F008",
+    "word": "ability",
+    "tag": "collocation-ability-n",
+    "level": "A2",
+    "teacher_note": "Common phrases: ability to do; show/lose/improve ability.",
+    "actionable_tip": "Example: She showed great ability in math.",
+    "example_good": "the ability to learn quickly",
+    "example_bad": "the ability of learn quickly"
+  },
+  {
+    "id": "F009",
+    "word": "",
+    "tag": "classroom-common-error-article",
+    "level": "A1",
+    "teacher_note": "Abstract nouns usually do not use an article, like information, advice.",
+    "actionable_tip": "Avoid: an information (wrong), use: some information / a piece of information.",
+    "example_good": "some information",
+    "example_bad": "an information"
+  },
+  {
+    "id": "F010",
+    "word": "",
+    "tag": "classroom-tip-sentence-length",
+    "level": "A2",
+    "teacher_note": "At first, do not write very long sentences. Make sure subject, verb, and object are clear.",
+    "actionable_tip": "Each sentence ≤ 12 words. Focus on easy to understand sentences.",
+    "example_good": "He didn’t bother to reply.",
+    "example_bad": "Because he had some important things to do so he didn’t bother to reply to me which made me sad."
+  },
+  {
+    "id": "F011",
+    "word": "",
+    "tag": "classroom-tip-contrast-examples",
+    "level": "A2",
+    "teacher_note": "Give two example sentences for one word. Contrast helps you remember.",
+    "actionable_tip": "Write one positive and one negative, or one abstract and one concrete meaning.",
+    "example_good": "It doesn’t bother me. / I won’t bother calling.",
+    "example_bad": ""
+  },
+  {
+    "id": "F012",
+    "word": "",
+    "tag": "review-spacing",
+    "level": "A1",
+    "teacher_note": "Spaced review is more effective: 12h → 24h → 72h.",
+    "actionable_tip": "Review new words after 24 hours. Review weak words again after 12 hours.",
+    "example_good": "",
+    "example_bad": ""
+  }
+]
