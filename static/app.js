@@ -7,6 +7,7 @@ const state = {
   bookId: localStorage.getItem("langbuddy.bookId") || localStorage.getItem("bookId") || "",
   books: [],
   activeWord: "",
+  detailWord: "",
   groups: [],
   reviewWords: [],
   quizSessionId: "",
@@ -16,7 +17,7 @@ const state = {
 const viewLoaders = {
   assistant: () => Promise.all([loadChatHistory(), loadOverview()]),
   vocabulary: () => Promise.all([loadBooks(), loadGroups()]),
-  review: () => loadOverview(),
+  study: () => loadOverview(),
   quiz: async () => {},
   materials: () => loadMaterials(),
 };
@@ -81,6 +82,10 @@ function bookLabel(book) {
 function updateBookContext() {
   const active = state.books.find((book) => book.bookId === state.bookId);
   $("#bookContext").textContent = active ? bookLabel(active) : "No book selected";
+  $("#activeBookName").textContent = active ? bookLabel(active) : "No book selected";
+  $("#activeBookMeta").textContent = active
+    ? `${active.bookId} · ${Number(active.group_count || 0)} morphology groups`
+    : "Choose or import a vocabulary book.";
   $("#bookSelect").value = state.bookId;
   $$(".book-row").forEach((row) => row.classList.toggle("active", row.dataset.bookId === state.bookId));
 }
@@ -100,6 +105,7 @@ function switchView(viewName) {
 async function selectBook(bookId, { refresh = true } = {}) {
   state.bookId = bookId || "";
   state.activeWord = "";
+  resetWordDetail();
   localStorage.setItem("langbuddy.bookId", state.bookId);
   localStorage.setItem("bookId", state.bookId);
   updateFocusUI();
@@ -131,7 +137,11 @@ async function loadBooks() {
       </div>`).join("");
     $$(".use-book", list).forEach((button) => button.addEventListener("click", () => {
       const bookId = button.closest(".book-row").dataset.bookId;
-      selectBook(bookId).then(() => { renderBookList(); showToast("Active book updated."); });
+      selectBook(bookId).then(() => {
+        renderBookList();
+        setLibraryManager(false);
+        showToast("Active book updated.");
+      });
     }));
   }
   updateBookContext();
@@ -147,6 +157,23 @@ function renderBookList() {
     const button = $(".use-book", row);
     if (button) button.textContent = active ? "Selected" : "Use book";
   });
+}
+
+function setLibraryManager(open) {
+  const manager = $("#libraryManager");
+  const button = $("#toggleLibrary");
+  manager.classList.toggle("hidden", !open);
+  button.setAttribute("aria-expanded", String(open));
+  button.textContent = open ? "Close library" : "Manage library";
+}
+
+function resetWordDetail() {
+  state.detailWord = "";
+  $("#wordSearchInput").value = "";
+  $("#wordDetailTitle").textContent = "Choose a word";
+  $("#wordDetailHint").textContent = "Select a word in the explorer to see its structure, examples, learning notes, and source.";
+  $("#wordDetailActions").classList.add("hidden");
+  $("#explanationResult").innerHTML = '<div class="empty-state small"><p>Word details will appear here.</p></div>';
 }
 
 async function importBook(event) {
@@ -392,9 +419,13 @@ function renderExplanation(word, explain, source) {
 
 async function explainWord(word) {
   if (!requireBook()) return;
-  const cleanWord = String(word || $("#explainWord").value || "").trim();
+  const cleanWord = String(word || $("#wordSearchInput").value || "").trim();
   if (!cleanWord) return showToast("Enter a word to explain.", "error");
-  $("#explainWord").value = cleanWord;
+  state.detailWord = cleanWord;
+  $("#wordSearchInput").value = cleanWord;
+  $("#wordDetailTitle").textContent = cleanWord;
+  $("#wordDetailHint").textContent = "Structure, usage guidance, examples, and learner actions for this word.";
+  $("#wordDetailActions").classList.remove("hidden");
   $("#explanationResult").innerHTML = '<div class="empty-state small"><p>Building an explanation…</p></div>';
   try {
     const data = await api(`/api/vocab/${encodeURIComponent(state.bookId)}/${encodeURIComponent(cleanWord)}/explain?ai=1`);
@@ -405,7 +436,7 @@ async function explainWord(word) {
 
 async function generateWordFeedback() {
   if (!requireBook()) return;
-  const word = $("#explainWord").value.trim();
+  const word = state.detailWord;
   if (!word) return showToast("Choose a word before generating feedback.", "error");
   const button = $("#generateFeedback");
   setBusy(button, true, "Generating…");
@@ -645,10 +676,11 @@ function bindEvents() {
     bindEvents.groupTimer = setTimeout(() => loadGroups().catch(() => {}), 250);
   });
   $("#showUngrouped").addEventListener("click", loadUngrouped);
-  $("#explainForm").addEventListener("submit", (event) => { event.preventDefault(); explainWord($("#explainWord").value); });
+  $("#toggleLibrary").addEventListener("click", () => setLibraryManager($("#libraryManager").classList.contains("hidden")));
+  $("#wordSearchForm").addEventListener("submit", (event) => { event.preventDefault(); explainWord($("#wordSearchInput").value); });
   $("#focusExplainedWord").addEventListener("click", () => {
-    const word = $("#explainWord").value.trim();
-    if (!word) return showToast("Explain or enter a word first.", "error");
+    const word = state.detailWord;
+    if (!word) return showToast("Choose a word first.", "error");
     setActiveWord(word); switchView("assistant"); showToast(`Focus set to “${word}”.`);
   });
   $("#generateFeedback").addEventListener("click", generateWordFeedback);

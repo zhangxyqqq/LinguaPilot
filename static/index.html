@@ -19,12 +19,12 @@
         <button class="nav-item active" data-view="assistant" type="button">
           <span class="nav-icon">✦</span><span>Learning Assistant</span>
         </button>
-        <button class="nav-item" data-view="vocabulary" type="button">
-          <span class="nav-icon">Aa</span><span>Books &amp; Vocabulary</span>
-        </button>
-        <button class="nav-item" data-view="review" type="button">
-          <span class="nav-icon">↻</span><span>Review</span>
+        <button class="nav-item" data-view="study" type="button">
+          <span class="nav-icon">↻</span><span>Study Today</span>
           <span class="nav-badge" id="navDueCount">0</span>
+        </button>
+        <button class="nav-item" data-view="vocabulary" type="button">
+          <span class="nav-icon">Aa</span><span>Vocabulary</span>
         </button>
         <button class="nav-item" data-view="quiz" type="button">
           <span class="nav-icon">✓</span><span>Quiz</span>
@@ -106,7 +106,7 @@
                 <div><p class="eyebrow">Live learner data</p><h2>Learner overview</h2></div>
               </div>
               <div class="metric-grid">
-                <button class="metric-card" type="button" data-go="review">
+                <button class="metric-card" type="button" data-go="study">
                   <span>Due now</span><strong id="overviewDue">—</strong><small>review cards</small>
                 </button>
                 <button class="metric-card" type="button" data-prompt="What are my weak words?">
@@ -132,28 +132,35 @@
           </div>
         </section>
 
-        <section class="view" id="view-vocabulary" data-title="Books &amp; Vocabulary" data-eyebrow="Build your vocabulary library">
-          <div class="page-grid two-column">
-            <div class="panel">
+        <section class="view" id="view-vocabulary" data-title="Vocabulary" data-eyebrow="Explore words and morphology">
+          <div class="vocabulary-layout">
+            <div class="panel vocabulary-explorer">
               <div class="section-heading">
-                <div><p class="eyebrow">Vocabulary books</p><h2>Your library</h2></div>
-              </div>
-              <form class="upload-row" id="bookUploadForm">
-                <input id="bookFile" type="file" accept=".csv" required>
-                <select id="bookLanguage" aria-label="Book language"><option value="en">English</option><option value="da">Danish</option></select>
-                <button class="button primary" type="submit">Import CSV</button>
-              </form>
-              <p class="form-help">Import a CSV vocabulary list. Existing books and learner state are preserved.</p>
-              <div class="book-list" id="bookList"></div>
-            </div>
-
-            <div class="panel">
-              <div class="section-heading">
-                <div><p class="eyebrow">Morphology &amp; grouping</p><h2>Explore vocabulary</h2></div>
+                <div><p class="eyebrow">Vocabulary Explorer</p><h2>Browse this book</h2></div>
                 <button class="button secondary compact" id="loadGroups" type="button">Load groups</button>
               </div>
+
+              <div class="active-book-bar">
+                <div>
+                  <span class="overview-label">Active book</span>
+                  <strong id="activeBookName">No book selected</strong>
+                  <small id="activeBookMeta">Choose or import a vocabulary book.</small>
+                </div>
+                <button class="button secondary compact" id="toggleLibrary" type="button" aria-expanded="false" aria-controls="libraryManager">Manage library</button>
+              </div>
+
+              <section class="library-manager hidden" id="libraryManager" aria-label="Library management">
+                <div class="library-manager-head"><div><strong>Library management</strong><p>Switch books or import a CSV vocabulary list.</p></div></div>
+                <form class="upload-row" id="bookUploadForm">
+                  <input id="bookFile" type="file" accept=".csv" required>
+                  <select id="bookLanguage" aria-label="Book language"><option value="en">English</option><option value="da">Danish</option></select>
+                  <button class="button primary" type="submit">Import book</button>
+                </form>
+                <div class="book-list" id="bookList"></div>
+              </section>
+
               <div class="search-row">
-                <input id="groupSearch" type="search" placeholder="Filter groups…">
+                <input id="groupSearch" type="search" placeholder="Filter morphology groups…" aria-label="Filter morphology groups">
                 <button class="button secondary compact" id="showUngrouped" type="button">Ungrouped</button>
               </div>
               <div class="group-browser">
@@ -161,32 +168,35 @@
                 <div class="word-list" id="wordList"><div class="empty-state small"><p>Select a group to see its words.</p></div></div>
               </div>
             </div>
-          </div>
 
-          <div class="panel explanation-panel">
-            <div class="section-heading">
-              <div><p class="eyebrow">Word tools</p><h2>Explain a word</h2></div>
-            </div>
-            <form class="inline-form" id="explainForm">
-              <input id="explainWord" type="text" placeholder="Enter a word" required>
-              <button class="button primary" type="submit">Explain</button>
-              <button class="button secondary" id="focusExplainedWord" type="button">Use as chat focus</button>
-              <button class="button secondary" id="generateFeedback" type="button">Generate feedback</button>
-            </form>
-            <div id="explanationResult" class="result-surface"><div class="empty-state small"><p>Choose a word from a group or enter one above.</p></div></div>
+            <aside class="panel word-detail-panel" aria-label="Word detail">
+              <div class="section-heading word-detail-heading">
+                <div><p class="eyebrow">Word Detail</p><h2 id="wordDetailTitle">Choose a word</h2></div>
+              </div>
+              <p class="subtle word-detail-hint" id="wordDetailHint">Select a word in the explorer to see its structure, examples, learning notes, and source.</p>
+              <form class="word-search" id="wordSearchForm">
+                <input id="wordSearchInput" type="search" placeholder="Look up another word…" aria-label="Look up another word" required>
+                <button class="button primary compact" type="submit">Search</button>
+              </form>
+              <div class="word-detail-actions hidden" id="wordDetailActions">
+                <button class="button secondary compact" id="focusExplainedWord" type="button">Use as chat focus</button>
+                <button class="button secondary compact" id="generateFeedback" type="button">Generate feedback</button>
+              </div>
+              <div id="explanationResult" class="result-surface"><div class="empty-state small"><p>Word details will appear here.</p></div></div>
+            </aside>
           </div>
         </section>
 
-        <section class="view" id="view-review" data-title="Review" data-eyebrow="SM-2 spaced repetition">
+        <section class="view" id="view-study" data-title="Study Today" data-eyebrow="Daily vocabulary session">
           <div class="panel">
             <div class="section-heading">
-              <div><p class="eyebrow">Today’s session</p><h2>Review queue</h2><p class="subtle">Loading today’s queue may introduce up to 10 new cards, matching the existing learning flow.</p></div>
+              <div><p class="eyebrow">Daily vocabulary session</p><h2>Study Today</h2><p class="subtle">Review scheduled words and learn up to 10 new words using the existing SM-2 study flow.</p></div>
               <button class="button primary" id="loadReview" type="button">Load today’s cards</button>
             </div>
             <div class="review-summary" id="reviewSummary"></div>
             <div class="review-columns">
-              <section><div class="list-heading"><h3>Due</h3><span id="dueListCount">0</span></div><div id="dueReviewList" class="review-list"></div></section>
-              <section><div class="list-heading"><h3>New</h3><span id="newListCount">0</span></div><div id="newReviewList" class="review-list"></div></section>
+              <section><div class="list-heading"><div><h3>Due for review</h3><p>Previously studied words scheduled for another look.</p></div><span id="dueListCount">0</span></div><div id="dueReviewList" class="review-list"></div></section>
+              <section><div class="list-heading"><div><h3>New words</h3><p>Words introduced within today’s daily limit.</p></div><span id="newListCount">0</span></div><div id="newReviewList" class="review-list"></div></section>
             </div>
           </div>
         </section>
