@@ -160,7 +160,10 @@
     </div>
 
     <div id="chatPanel" class="card" style="flex:1; min-height:480px; display:flex; flex-direction:column;">
-     <h3 id="chatTitle">AI Chat</h3>
+     <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+       <h3 id="chatTitle" style="margin:0;">Global Learning Assistant</h3>
+       <button id="chatClearContext" type="button" style="display:none;">Clear word context</button>
+     </div>
       <div id="chipBar" style="display:flex; gap:8px; margin:8px 0 6px 0; overflow:auto; padding-bottom:6px;">
         <!-- chips will be injected here by JS -->
       </div>
@@ -168,7 +171,7 @@
          style="flex:1; overflow:auto; border:1px solid #eee; border-radius:8px; padding:10px; background:#fafafa;"></div>
 
         <div style="display:flex; gap:8px; margin-top:8px;">
-          <input id="chatInput" placeholder="Ask AI: How can I remember this word more firmly?"
+          <input id="chatInput" placeholder="Ask about reviews, goals, language, or uploaded materials"
              style="flex:1; padding:8px 10px;">
           <button id="chatSend">send</button>
           <button id="chatReset" title="New Conversation">Reset</button>
@@ -526,7 +529,6 @@
       document.querySelectorAll('.btnUseBook').forEach(btn => {
         btn.addEventListener('click', () => {
         setBookId(btn.getAttribute('data-bid'));
-        alert('Switched to bookId=' + BOOK_ID);
       });
     });
   }
@@ -744,7 +746,9 @@ let CHAT_MESSAGES = [];
   function updateChatTitle(){
     const titleEl = document.querySelector('#chatTitle');
     if (!titleEl) return;
-    titleEl.textContent = 'AI Chat' + (CURRENT_CHAT_WORD ? '：' + CURRENT_CHAT_WORD : ' (free mode)');
+    titleEl.textContent = 'Global Learning Assistant' + (CURRENT_CHAT_WORD ? ' · Focus: ' + CURRENT_CHAT_WORD : '');
+    const clearBtn = document.querySelector('#chatClearContext');
+    if (clearBtn) clearBtn.style.display = CURRENT_CHAT_WORD ? '' : 'none';
   }
   function scrollToChat(){
     const panel = document.querySelector('#chatPanel');
@@ -883,16 +887,11 @@ let CHAT_MESSAGES = [];
 
     const serverMsgs = Array.isArray(data.messages) ? data.messages : [];
 
-    // 关键：合并，而不是直接 renderChatMsgs(serverMsgs)
+    // Fixed-intent responses still use the legacy word endpoint. Show only its
+    // latest answer in the global panel; the legacy word history remains intact.
     let merged = beforeMsgs.slice();
-
-    if (serverMsgs.length > beforeMsgs.length) {
-      merged = beforeMsgs.concat(serverMsgs.slice(beforeMsgs.length));
-    } else if (serverMsgs.length) {
-      // 兜底：如果后端只返回少量新消息，就追加最后一条 assistant
-      const last = serverMsgs[serverMsgs.length - 1];
-      if (last) merged.push(last);
-    }
+    const lastAssistant = serverMsgs.slice().reverse().find(m => m.role === 'assistant');
+    if (lastAssistant) merged.push(lastAssistant);
 
     renderChatMsgs(merged);
 
@@ -973,14 +972,14 @@ let CHAT_MESSAGES = [];
       console.error(e); alert('Network error');
     }
   }
-  async function openChat(word){
+  async function openGlobalChat(activeWord){
     if (!BOOK_ID) return alert('Please select a book first');
-    CURRENT_CHAT_WORD = word || '';
+    CURRENT_CHAT_WORD = activeWord || '';
     updateChatTitle();
     const box = document.querySelector('#chatMsgs');
     box.innerHTML = 'Loading history...';
     try {
-      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(CURRENT_CHAT_WORD)}/chat/history`);
+      const r = await fetch(`/api/books/${BOOK_ID}/chat/history`);
       const data = await r.json();
       if (!r.ok) { box.textContent = JSON.stringify(data); return; }
       renderChatMsgs(data.messages || []);
@@ -992,25 +991,23 @@ let CHAT_MESSAGES = [];
     }
   }
 
+  // Keep the existing call sites: clicking a word now adds optional context to
+  // the global conversation instead of switching to a separate transcript.
+  async function openChat(word){
+    return openGlobalChat(word || '');
+  }
+
   document.querySelector('#chatSend').addEventListener('click', async ()=>{
     const input = document.querySelector('#chatInput');
     const text = input.value.trim();
     if (!text) return;
-    if (!CURRENT_CHAT_WORD) {
-      const def = pickDefaultWord();
-      if (def) {
-        // silently adopt a default word so user can chat immediately
-        await openChat(def);
-      } else {
-        return alert('Please load today’s tasks or click a word to begin.');
-      }
-    }
+    if (!BOOK_ID) return alert('Please select a book first');
     const btn = document.querySelector('#chatSend');
     btn.disabled = true; btn.textContent = 'Sending...';
     try {
-      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(CURRENT_CHAT_WORD)}/chat`, {
+      const r = await fetch(`/api/books/${BOOK_ID}/chat`, {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message: text, active_word: CURRENT_CHAT_WORD || null })
       });
       const data = await r.json();
       if (!r.ok) { alert(JSON.stringify(data)); return; }
@@ -1028,17 +1025,13 @@ let CHAT_MESSAGES = [];
   });
 
   document.querySelector('#chatReset').addEventListener('click', async ()=>{
-    if (!CURRENT_CHAT_WORD) {
-      const def = pickDefaultWord();
-      if (def) { await openChat(def); }
-      else return alert('Please load today’s tasks or click a word to begin');
-    }
+    if (!BOOK_ID) return alert('Please select a book first');
     updateChatTitle();
-    if (!confirm('Start a new conversation with this word?')) return;
+    if (!confirm('Start a new global conversation? Word chat history will be preserved.')) return;
     try {
-      const r = await fetch(`/api/vocab/${BOOK_ID}/${encodeURIComponent(CURRENT_CHAT_WORD)}/chat`, {
+      const r = await fetch(`/api/books/${BOOK_ID}/chat`, {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ message: '(New Conversation)', force_new: true })
+        body: JSON.stringify({ active_word: CURRENT_CHAT_WORD || null, force_new: true })
       });
       const data = await r.json();
       if (!r.ok) { alert(JSON.stringify(data)); return; }
@@ -1046,6 +1039,10 @@ let CHAT_MESSAGES = [];
     } catch(e){ console.error(e); alert('Network Anomaly'); }
   });
   var BOOK_ID = localStorage.getItem('bookId') || '';
+  document.querySelector('#chatClearContext').addEventListener('click', async ()=>{
+    if (!BOOK_ID) return;
+    await openGlobalChat('');
+  });
   document.querySelector('#btnFeedback').addEventListener('click', async ()=>{
     if (!CURRENT_CHAT_WORD){
       const def = pickDefaultWord();
@@ -1057,6 +1054,9 @@ let CHAT_MESSAGES = [];
     BOOK_ID = id || '';
     localStorage.setItem('bookId', BOOK_ID);
     document.querySelector('#bookId').textContent = BOOK_ID || '(Not selected)';
+    CURRENT_CHAT_WORD = '';
+    if (BOOK_ID) openGlobalChat('');
+    else renderChatMsgs([]);
   }
 
 // When the page loads, display the last bookId; if available, refresh the group/today's review section.
@@ -1069,6 +1069,9 @@ let CHAT_MESSAGES = [];
     // loadToday();
     // or Refresh the library list to easily see the status of the “Use” button.
       if (typeof loadLibrary === 'function') loadLibrary();
+      if (typeof openGlobalChat === 'function') openGlobalChat('');
+    } else {
+      renderChipsForWord('');
     }
   });
 
@@ -1105,7 +1108,7 @@ let CHAT_MESSAGES = [];
     });
 
     document.querySelectorAll('.btnUseBook').forEach(btn=>{
-      btn.addEventListener('click', ()=>{ setBookId(btn.getAttribute('data-bid')); alert('Switched to bookId=' + BOOK_ID); });
+      btn.addEventListener('click', ()=>{ setBookId(btn.getAttribute('data-bid')); });
     });
 
 function escapeHtml(s){

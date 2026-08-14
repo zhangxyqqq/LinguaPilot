@@ -23,6 +23,12 @@ class ChatIn(BaseModel):
     message: Optional[str] = None  # 纯聊天时使用；有 intent 时可为空
     force_new: bool = False        # True 则清空该词历史再聊
 
+
+class GlobalChatIn(BaseModel):
+    message: Optional[str] = None
+    active_word: Optional[str] = None
+    force_new: bool = False
+
 # ---------- Helpers ----------
 #去morph找单词的基本信息
 def _grounding_for(word: str) -> Dict[str, Any]:
@@ -212,6 +218,46 @@ def _format_family(payload: Dict[str, Any]) -> str:
     if len(lines) == 1:
         lines.append("- (no items)")
     return "\n".join(lines)
+
+
+async def _plain_agent_response(
+    book_id: str,
+    active_word: Optional[str],
+    conversation: List[Dict[str, str]],
+    memory: Optional[Dict[str, Any]],
+    legacy_llm,
+    legacy_word_mode: bool = False,
+) -> str:
+    try:
+        # Keep this import inside the guarded path so a LangGraph import or
+        # initialization failure can still use the existing chat implementation.
+        from .agent import run_agent
+
+        return await run_agent(
+            book_id=book_id,
+            active_word=active_word,
+            conversation=conversation,
+            memory=memory,
+        )
+    except Exception as e:
+        print(f"Agent failure; using legacy plain-chat fallback: {type(e).__name__}: {e}")
+        if legacy_word_mode:
+            sys_prompt = (
+                f"You are an English vocabulary coach. Current word: {active_word}. "
+                "Explain step-by-step using a root-and-suffix approach, "
+                "provide concise and clear answers, and pose a brief follow-up question to confirm understanding. "
+                "Output plain text only."
+            )
+        else:
+            context = active_word or "(none)"
+            sys_prompt = (
+                "You are a concise language-learning coach. "
+                f"Current word context: {context}. "
+                "The word context is optional; answer the user's actual question. "
+                "Output plain text only."
+            )
+        history_text = "\n".join(f"{m['role']}: {m['content']}" for m in conversation)
+        return await legacy_llm(sys_prompt + "\n\n" + history_text + "\n\nassistant:")
 
 @router.post("/api/vocab/{book_id}/{word}/chat")
 async def vocab_chat(book_id: str, word: str, payload: ChatIn):
@@ -416,32 +462,73 @@ async def vocab_chat(book_id: str, word: str, payload: ChatIn):
     apply_explicit_memory(state, user_text)
     conv.append({"role": "user", "content": user_text})
 
-    try:
-        # Keep this import inside the guarded path so a LangGraph import or
-        # initialization failure can still use the existing chat implementation.
-        from .agent import run_agent
-
-        ai_text = await run_agent(
-            book_id=book_id,
-            active_word=word,
-            conversation=conv,
-            memory=state.get("memory"),
-        )
-    except Exception as e:
-        print(f"Agent failure; using legacy plain-chat fallback: {type(e).__name__}: {e}")
-        sys_prompt = (
-            f"You are an English vocabulary coach. Current word: {word}. "
-            "Explain step-by-step using a root-and-suffix approach, "
-            "provide concise and clear answers, and pose a brief follow-up question to confirm understanding. "
-            "Output plain text only."
-        )
-        history_text = "\n".join(f"{m['role']}: {m['content']}" for m in conv)
-        ai_text = await _call_llm(sys_prompt + "\n\n" + history_text + "\n\nassistant:")
+    ai_text = await _plain_agent_response(
+        book_id=book_id,
+        active_word=word,
+        conversation=conv,
+        memory=state.get("memory"),
+        legacy_llm=_call_llm,
+        legacy_word_mode=True,
+    )
     assistant_msg = (ai_text or "").strip() or "(Placeholder response: No actual model received)"
 
     conv.append({"role": "assistant", "content": assistant_msg})
     p.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
     return {"word": word, "messages": conv[-20:]}
+
+
+@router.post("/api/books/{book_id}/chat")
+async def global_chat(book_id: str, payload: GlobalChatIn):
+    _state_path, _ensure_cache, _call_llm = _shared()
+    p = _state_path(book_id)
+    if not p.exists():
+        raise HTTPException(404, "book not found")
+
+    state = json.loads(p.read_text(encoding="utf-8"))
+    cache = _ensure_cache(state)
+    conv = cache.setdefault("global_chat", [])
+    if not isinstance(conv, list):
+        conv = []
+        cache["global_chat"] = conv
+    if payload.force_new:
+        conv.clear()
+
+    user_text = (payload.message or "").strip()
+    active_word = (payload.active_word or "").strip() or None
+    if not user_text:
+        if payload.force_new:
+            p.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+            return {"book_id": book_id, "active_word": active_word, "messages": []}
+        raise HTTPException(400, "message is required for global chat")
+
+    apply_explicit_memory(state, user_text)
+    conv.append({"role": "user", "content": user_text})
+    ai_text = await _plain_agent_response(
+        book_id=book_id,
+        active_word=active_word,
+        conversation=conv[-40:],
+        memory=state.get("memory"),
+        legacy_llm=_call_llm,
+    )
+    assistant_msg = (ai_text or "").strip() or "(Placeholder response: No actual model received)"
+    conv.append({"role": "assistant", "content": assistant_msg})
+    p.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"book_id": book_id, "active_word": active_word, "messages": conv[-40:]}
+
+
+@router.get("/api/books/{book_id}/chat/history")
+async def global_chat_history(book_id: str):
+    _state_path, _ensure_cache, _ = _shared()
+    p = _state_path(book_id)
+    if not p.exists():
+        raise HTTPException(404, "book not found")
+    state = json.loads(p.read_text(encoding="utf-8"))
+    cache = _ensure_cache(state)
+    conv = cache.get("global_chat", [])
+    if not isinstance(conv, list):
+        conv = []
+    return {"book_id": book_id, "messages": conv[-100:]}
+
 #取历史借口
 @router.get("/api/vocab/{book_id}/{word}/chat/history")
 async def chat_history(book_id: str, word: str):

@@ -199,17 +199,17 @@ def test_agent_routes_general_weak_and_due_questions(monkeypatch, tmp_path):
 
     general = asyncio.run(run_agent(
         "book-1",
-        "alpha",
+        None,
         [{"role": "user", "content": "What is the difference between affect and effect?"}],
     ))
     weak = asyncio.run(run_agent(
         "book-1",
-        "alpha",
+        None,
         [{"role": "user", "content": "What are my weak words?"}],
     ))
     due = asyncio.run(run_agent(
         "book-1",
-        "alpha",
+        None,
         [{"role": "user", "content": "What should I review today?"}],
     ))
     memory = asyncio.run(run_agent(
@@ -403,3 +403,93 @@ def test_plain_chat_persists_and_resets_memory_without_touching_cards(monkeypatc
     reset_state = json.loads(state_path.read_text(encoding="utf-8"))
     assert "memory" not in reset_state
     assert reset_state["user"]["cards"]["alpha"] == original_card
+
+
+def test_global_chat_without_word_persists_history_and_preserves_word_chat(monkeypatch, tmp_path):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    from app import chat, main
+
+    state_path = tmp_path / "book-1.json"
+    old_word_chat = [
+        {"role": "user", "content": "old word question"},
+        {"role": "assistant", "content": "old word answer"},
+    ]
+    state_path.write_text(json.dumps({
+        "book_id": "book-1",
+        "groups": {},
+        "ungrouped": [],
+        "user": {"cards": {}},
+        "cache": {"vocab": {"alpha": {"chat": old_word_chat}}},
+    }), encoding="utf-8")
+    calls = []
+
+    async def global_agent(*args, **kwargs):
+        calls.append(copy.deepcopy(kwargs))
+        return f"global answer {len(calls)}"
+
+    monkeypatch.setattr(agent, "run_agent", global_agent)
+    monkeypatch.setattr(main, "_state_path", lambda book_id: state_path)
+
+    first = asyncio.run(chat.global_chat(
+        "book-1",
+        chat.GlobalChatIn(message="What should I review today?"),
+    ))
+    second = asyncio.run(chat.global_chat(
+        "book-1",
+        chat.GlobalChatIn(message="Explain this focus.", active_word="alpha"),
+    ))
+    history = asyncio.run(chat.global_chat_history("book-1"))
+
+    assert calls[0]["active_word"] is None
+    assert calls[1]["active_word"] == "alpha"
+    assert len(calls[1]["conversation"]) == 3
+    assert first["messages"][-1]["content"] == "global answer 1"
+    assert second["messages"] == history["messages"]
+    assert len(history["messages"]) == 4
+    persisted = json.loads(state_path.read_text(encoding="utf-8"))
+    assert persisted["cache"]["vocab"]["alpha"]["chat"] == old_word_chat
+
+
+def test_global_chat_reset_is_scoped_and_global_fallback_works(monkeypatch, tmp_path, capsys):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    from app import chat, main
+
+    state_path = tmp_path / "book-1.json"
+    state_path.write_text(json.dumps({
+        "book_id": "book-1",
+        "groups": {},
+        "ungrouped": [],
+        "user": {"cards": {"alpha": {"last_grade": 2}}},
+        "cache": {
+            "global_chat": [{"role": "user", "content": "old global message"}],
+            "vocab": {"alpha": {"chat": [{"role": "user", "content": "keep me"}]}},
+        },
+    }), encoding="utf-8")
+
+    async def broken_agent(*args, **kwargs):
+        raise RuntimeError("global agent unavailable")
+
+    async def legacy_llm(prompt):
+        assert "Current word context: (none)" in prompt
+        return "global legacy answer"
+
+    monkeypatch.setattr(agent, "run_agent", broken_agent)
+    monkeypatch.setattr(main, "_state_path", lambda book_id: state_path)
+    monkeypatch.setattr(main, "call_llm", legacy_llm)
+
+    fallback = asyncio.run(chat.global_chat(
+        "book-1",
+        chat.GlobalChatIn(message="What is the difference between affect and effect?"),
+    ))
+    assert fallback["messages"][-1]["content"] == "global legacy answer"
+    assert "Agent failure; using legacy plain-chat fallback" in capsys.readouterr().out
+
+    reset = asyncio.run(chat.global_chat(
+        "book-1",
+        chat.GlobalChatIn(force_new=True),
+    ))
+    persisted = json.loads(state_path.read_text(encoding="utf-8"))
+    assert reset["messages"] == []
+    assert persisted["cache"]["global_chat"] == []
+    assert persisted["cache"]["vocab"]["alpha"]["chat"][0]["content"] == "keep me"
+    assert persisted["user"]["cards"]["alpha"]["last_grade"] == 2
