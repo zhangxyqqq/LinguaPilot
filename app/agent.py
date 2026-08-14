@@ -14,6 +14,7 @@ from langgraph.prebuilt import ToolNode, ToolRuntime, tools_condition
 
 from .memory import compact_preferences, learner_memory_view, normalize_memory
 from .materials import search_learning_materials_for_book
+from .storage import current_user_id, get_storage
 
 
 STATE_DIR = Path(__file__).resolve().parent.parent / "state"
@@ -32,6 +33,7 @@ The current word is context only and does not limit what the user may ask about.
 
 @dataclass(frozen=True)
 class AgentContext:
+    user_id: str
     book_id: str
     memory_snapshot: Mapping[str, Any] = field(default_factory=dict)
 
@@ -53,12 +55,20 @@ def _as_number(value: Any) -> Optional[float]:
         return None
 
 
-def _read_book_state(book_id: str, state_dir: Optional[Path] = None) -> Dict[str, Any]:
-    base = state_dir or STATE_DIR
-    path = base / f"{book_id}.json"
-    if not path.exists():
-        raise FileNotFoundError(f"learner state not found for book_id={book_id}")
-    data = json.loads(path.read_text(encoding="utf-8"))
+def _read_book_state(
+    book_id: str,
+    state_dir: Optional[Path] = None,
+    user_id: Optional[str] = None,
+) -> Dict[str, Any]:
+    if state_dir is not None:
+        path = state_dir / f"{book_id}.json"
+        if not path.exists():
+            raise FileNotFoundError(f"learner state not found for book_id={book_id}")
+        data = json.loads(path.read_text(encoding="utf-8"))
+    else:
+        data = get_storage().load_book_state(book_id, user_id)
+        if data is None:
+            raise FileNotFoundError(f"learner state not found for book_id={book_id}")
     if not isinstance(data, dict):
         raise ValueError(f"invalid learner state for book_id={book_id}")
     return data
@@ -209,7 +219,7 @@ def get_weak_words(
     limit: int = 10,
 ) -> Dict[str, Any]:
     """Get this learner's weak vocabulary using persisted grades and quiz evidence."""
-    state = _read_book_state(runtime.context.book_id)
+    state = _read_book_state(runtime.context.book_id, user_id=runtime.context.user_id)
     return select_weak_words(state, limit=limit)
 
 
@@ -219,7 +229,7 @@ def get_due_words(
     limit: int = 10,
 ) -> Dict[str, Any]:
     """Get this learner's already-studied vocabulary whose review time has arrived."""
-    state = _read_book_state(runtime.context.book_id)
+    state = _read_book_state(runtime.context.book_id, user_id=runtime.context.user_id)
     return select_due_words(state, limit=limit)
 
 
@@ -242,6 +252,7 @@ def search_learning_materials(
         runtime.context.book_id,
         query=query,
         limit=limit,
+        user_id=runtime.context.user_id,
     )
 
 
@@ -297,6 +308,7 @@ async def run_agent(
     active_word: Optional[str],
     conversation: List[Dict[str, str]],
     memory: Optional[Mapping[str, Any]] = None,
+    user_id: Optional[str] = None,
 ) -> str:
     memory_snapshot = normalize_memory(memory)
     preferences = compact_preferences(memory_snapshot)
@@ -315,7 +327,11 @@ async def run_agent(
 
     result = await _agent_graph().ainvoke(
         {"messages": messages},
-        context=AgentContext(book_id=book_id, memory_snapshot=memory_snapshot),
+        context=AgentContext(
+            user_id=user_id or current_user_id(),
+            book_id=book_id,
+            memory_snapshot=memory_snapshot,
+        ),
         config={"recursion_limit": 6},
     )
     final_message = result["messages"][-1]

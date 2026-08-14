@@ -1,7 +1,8 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from pathlib import Path
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 import uuid, json, shutil
 from dotenv import load_dotenv
@@ -25,9 +26,46 @@ from . import explain  # 新增
 from .feedback import router as feedback_router
 from .session_quiz import router as session_quiz_router
 from .materials import router as materials_router
+from .storage import (
+    DEFAULT_USER_ID,
+    USER_HEADER,
+    BookStateRecord,
+    get_storage,
+    reset_current_user,
+    set_current_user,
+)
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    storage = get_storage()
+    storage.initialize()
+    summary = storage.migration_summary
+    if summary.books_imported or summary.materials_imported:
+        print(
+            "SQLite legacy import complete:",
+            f"{summary.books_imported} books, {summary.materials_imported} material stores",
+        )
+    yield
+
 
 # --- FastAPI app ---
-app = FastAPI(title="LangBuddy")
+app = FastAPI(title="LangBuddy", lifespan=lifespan)
+
+
+@app.middleware("http")
+async def learner_identity_context(request: Request, call_next):
+    """Bind an explicit, stable learner identity without adding authentication."""
+    try:
+        token = set_current_user(request.headers.get(USER_HEADER, DEFAULT_USER_ID))
+    except ValueError:
+        from fastapi.responses import JSONResponse
+        return JSONResponse(status_code=400, content={"detail": "invalid user id"})
+    try:
+        response = await call_next(request)
+        response.headers["X-LangBuddy-User"] = request.headers.get(USER_HEADER, DEFAULT_USER_ID)
+        return response
+    finally:
+        reset_current_user(token)
 
 
 try:
@@ -75,28 +113,8 @@ app.include_router(chat.router)
 app.include_router(explain.router)
 app.include_router(feedback_router)
 def _list_books():
-    #列书库
-    """Scan the state directory and compile a list of imported books."""
-    items = []
-    for name in os.listdir(STATE_DIR):
-        if not name.endswith(".json"):
-            continue
-        p = STATE_DIR / name
-        try:
-            data = json.loads(p.read_text(encoding="utf-8"))
-            bid = data.get("book_id") or name.replace(".json","")
-            groups = data.get("groups", {})
-            items.append({
-                "bookId": bid,
-                "source": data.get("source"),
-                "group_count": len(groups),
-                "created_at": datetime.fromtimestamp(p.stat().st_mtime).isoformat(timespec="seconds"),
-            })
-        except Exception:
-            continue
-    # New ones come first(新的在前)
-    items.sort(key=lambda x: x["created_at"], reverse=True)
-    return items
+    """List books owned by the current learner identity."""
+    return get_storage().list_books()
 @app.get("/api/books")
 def list_books():
     return {"items": _list_books()}
@@ -193,8 +211,8 @@ def _merge_examples(prev: list | None, incoming: list | None, limit: int = 8) ->
 
 
 
-def _state_path(book_id: str) -> Path:
-    return STATE_DIR / f"{book_id}.json"
+def _state_path(book_id: str) -> BookStateRecord:
+    return BookStateRecord(book_id)
 
 def _ensure_card(cards: dict, word: str):
     c = cards.get(word)

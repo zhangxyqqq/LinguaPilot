@@ -14,6 +14,7 @@ from app.materials import (
     reset_materials,
     search_learning_materials_for_book,
 )
+from app.storage import get_storage
 
 
 def _text_pdf_bytes(text: str) -> bytes:
@@ -100,17 +101,9 @@ def test_material_filename_is_sanitized_and_invalid_book_id_rejected(tmp_path):
         raise AssertionError("invalid book_id should be rejected")
 
 
-def test_pdf_api_upload_extract_retrieve_source_and_book_scope(monkeypatch, tmp_path):
-    state_dir = tmp_path / "state"
-    material_dir = state_dir / "materials"
-    state_dir.mkdir()
+def test_pdf_api_upload_extract_retrieve_source_and_book_scope():
     for book_id in ("book-a", "book-b"):
-        (state_dir / f"{book_id}.json").write_text(
-            f'{{"book_id": "{book_id}", "user": {{"cards": {{}}}}}}',
-            encoding="utf-8",
-        )
-    monkeypatch.setattr(materials, "STATE_DIR", state_dir)
-    monkeypatch.setattr(materials, "MATERIALS_DIR", material_dir)
+        get_storage().save_book_state({"book_id": book_id, "user": {"cards": {}}})
 
     app = FastAPI()
     app.include_router(materials.router)
@@ -127,10 +120,10 @@ def test_pdf_api_upload_extract_retrieve_source_and_book_scope(monkeypatch, tmp_
     assert document["chunk_count"] == 1
 
     retrieved = search_learning_materials_for_book(
-        "book-a", "When is the subjunctive used for hypothetical wishes?", materials_dir=material_dir
+        "book-a", "When is the subjunctive used for hypothetical wishes?"
     )
     assert retrieved["items"][0]["source_name"] == "lesson.pdf"
     assert "hypothetical situations" in retrieved["items"][0]["text"]
     assert search_learning_materials_for_book(
-        "book-b", "subjunctive hypothetical wishes", materials_dir=material_dir
+        "book-b", "subjunctive hypothetical wishes"
     )["items"] == []

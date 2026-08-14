@@ -15,3 +15,6 @@ Thumbs.db
 *.tmp
 state/materials/
 state/session_quiz/
+state/*.sqlite3
+state/*.sqlite3-shm
+state/*.sqlite3-wal

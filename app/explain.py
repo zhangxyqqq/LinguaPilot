@@ -1,10 +1,10 @@
 # app/explain.py
-import os
 import json
 from fastapi import APIRouter, HTTPException, Query
 from typing import Dict, Any
 from .llm import call_llm, gen_explanation_ai
 from .morph import MorphService
+from .storage import get_storage
 
 router = APIRouter(prefix="/api/vocab", tags=["explain"])
 
@@ -12,17 +12,13 @@ morph = MorphService()
 
 _CACHE: Dict[str, Dict[str, Any]] = {}
 
-STATE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'state')
-
 def _get_book_lang(book_id: str) -> str:
-    p = os.path.join(STATE_DIR, f"{book_id}.json")
-    if os.path.exists(p):
-        try:
-            with open(p, 'r', encoding='utf-8') as f:
-                obj = json.load(f)
-                return obj.get('lang', 'en')
-        except Exception:
-            pass
+    try:
+        state = get_storage().load_book_state(book_id)
+        if state:
+            return state.get('lang', 'en')
+    except Exception:
+        pass
     return 'en'
 
 @router.get("/{bookId}/{word}/explain")

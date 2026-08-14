@@ -23,6 +23,7 @@ from app.memory import (
     extract_explicit_memory,
     learner_memory_view,
 )
+from app.storage import get_storage
 
 
 def test_select_weak_words_uses_only_persisted_signals_and_limit():
@@ -193,8 +194,7 @@ def test_agent_routes_general_weak_and_due_questions(monkeypatch, tmp_path):
             }
         },
     }
-    (tmp_path / "book-1.json").write_text(json.dumps(state), encoding="utf-8")
-    monkeypatch.setattr(agent, "STATE_DIR", tmp_path)
+    get_storage().save_book_state(state)
     monkeypatch.setattr(agent, "_model_with_tools", lambda: _RoutingModel())
 
     general = asyncio.run(run_agent(
@@ -258,16 +258,12 @@ def test_agent_routes_material_search_and_combines_it_with_learner_tools(monkeyp
         "book_id": "book-1",
         "user": {"cards": {"passive": {"last_grade": 2}}},
     }
-    (tmp_path / "book-1.json").write_text(json.dumps(state), encoding="utf-8")
-    material_dir = tmp_path / "materials"
+    get_storage().save_book_state(state)
     materials.add_material(
         "book-1",
         "grammar-notes.txt",
         b"The passive voice uses be plus a past participle.",
-        materials_dir=material_dir,
     )
-    monkeypatch.setattr(agent, "STATE_DIR", tmp_path)
-    monkeypatch.setattr(materials, "MATERIALS_DIR", material_dir)
     monkeypatch.setattr(agent, "_model_with_tools", lambda: _RoutingModel())
 
     material_answer = asyncio.run(run_agent(
@@ -495,13 +491,10 @@ def test_global_chat_reset_is_scoped_and_global_fallback_works(monkeypatch, tmp_
     assert persisted["user"]["cards"]["alpha"]["last_grade"] == 2
 
 
-def test_learner_overview_is_read_only(tmp_path, monkeypatch):
+def test_learner_overview_is_read_only():
     from app import main, materials
 
     book_id = "overview-book"
-    state_dir = tmp_path / "state"
-    materials_dir = state_dir / "materials"
-    state_dir.mkdir()
     learner_state = {
         "book_id": book_id,
         "user": {
@@ -519,22 +512,17 @@ def test_learner_overview_is_read_only(tmp_path, monkeypatch):
             "recurring_confusions": [],
         },
     }
-    state_path = state_dir / f"{book_id}.json"
-    state_path.write_text(json.dumps(learner_state), encoding="utf-8")
+    get_storage().save_book_state(learner_state)
     materials.add_material(
         book_id,
         "notes.txt",
         b"Affect is usually a verb; effect is usually a noun.",
-        materials_dir=materials_dir,
     )
-    before = state_path.read_bytes()
-
-    monkeypatch.setattr(main, "STATE_DIR", state_dir)
-    monkeypatch.setattr(materials, "MATERIALS_DIR", materials_dir)
+    before = copy.deepcopy(get_storage().load_book_state(book_id))
     result = main.learner_overview(book_id)
 
     assert result["due"]["total_matches"] == 1
     assert result["weak"]["total_matches"] == 1
     assert result["memory"]["goals"] == ["Pass B2"]
     assert result["material_count"] == 1
-    assert state_path.read_bytes() == before
+    assert get_storage().load_book_state(book_id) == before

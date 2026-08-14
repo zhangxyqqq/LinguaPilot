@@ -10,6 +10,8 @@ from typing import Any, Dict, List, Mapping, Optional
 
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
+from .storage import get_storage
+
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 STATE_DIR = ROOT_DIR / "state"
@@ -37,7 +39,25 @@ def _empty_store(book_id: str) -> Dict[str, Any]:
     return {"version": 1, "book_id": book_id, "documents": [], "chunks": []}
 
 
-def load_material_store(book_id: str, materials_dir: Optional[Path] = None) -> Dict[str, Any]:
+def load_material_store(
+    book_id: str,
+    materials_dir: Optional[Path] = None,
+    user_id: Optional[str] = None,
+) -> Dict[str, Any]:
+    if materials_dir is None:
+        data = get_storage().load_material_store(book_id, user_id)
+        if data is None:
+            return _empty_store(book_id)
+        if not isinstance(data, Mapping) or data.get("book_id") != book_id:
+            raise ValueError(f"invalid material store for book_id={book_id}")
+        documents = data.get("documents") if isinstance(data.get("documents"), list) else []
+        chunks = data.get("chunks") if isinstance(data.get("chunks"), list) else []
+        return {
+            "version": 1,
+            "book_id": book_id,
+            "documents": [dict(item) for item in documents if isinstance(item, Mapping)],
+            "chunks": [dict(item) for item in chunks if isinstance(item, Mapping)],
+        }
     path = _store_path(book_id, materials_dir)
     if not path.exists():
         return _empty_store(book_id)
@@ -59,6 +79,9 @@ def _write_material_store(
     store: Mapping[str, Any],
     materials_dir: Optional[Path] = None,
 ) -> None:
+    if materials_dir is None:
+        get_storage().save_material_store(book_id, store)
+        return
     path = _store_path(book_id, materials_dir)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".tmp")
@@ -200,8 +223,13 @@ def search_learning_materials_for_book(
     query: str,
     limit: int = 5,
     materials_dir: Optional[Path] = None,
+    user_id: Optional[str] = None,
 ) -> Dict[str, Any]:
-    return search_material_store(load_material_store(book_id, materials_dir), query=query, limit=limit)
+    return search_material_store(
+        load_material_store(book_id, materials_dir, user_id),
+        query=query,
+        limit=limit,
+    )
 
 
 def delete_material(
@@ -220,6 +248,8 @@ def delete_material(
 
 
 def reset_materials(book_id: str, materials_dir: Optional[Path] = None) -> bool:
+    if materials_dir is None:
+        return get_storage().delete_material_store(book_id)
     path = _store_path(book_id, materials_dir)
     if not path.exists():
         return False
@@ -232,7 +262,7 @@ def _require_book(book_id: str) -> None:
         safe_book_id = _validate_book_id(book_id)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
-    if not (STATE_DIR / f"{safe_book_id}.json").exists():
+    if not get_storage().book_exists(safe_book_id):
         raise HTTPException(404, "book not found")
 
 

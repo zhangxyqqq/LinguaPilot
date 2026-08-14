@@ -2,6 +2,8 @@
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+const learnerUserId = localStorage.getItem("langbuddy.userId") || "local-user";
+localStorage.setItem("langbuddy.userId", learnerUserId);
 
 const state = {
   bookId: localStorage.getItem("langbuddy.bookId") || localStorage.getItem("bookId") || "",
@@ -23,7 +25,9 @@ const viewLoaders = {
 };
 
 async function api(url, options = {}) {
-  const response = await fetch(url, options);
+  const headers = new Headers(options.headers || {});
+  headers.set("X-User-ID", learnerUserId);
+  const response = await fetch(url, { ...options, headers });
   const text = await response.text();
   let data = {};
   if (text) {

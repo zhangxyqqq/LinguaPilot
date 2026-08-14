@@ -7,6 +7,7 @@ from pathlib import Path
 router = APIRouter()
 from .llm import call_llm
 from .sm2 import review_card
+from .storage import current_user_id, get_storage
 
 # --- session cache for LLM-generated questions ---
 _BASE_DIR = Path(__file__).resolve().parent
@@ -39,10 +40,6 @@ def _load_session(session_id: str) -> Optional[Dict[str, Any]]:
         with open(p, "r", encoding="utf-8") as f:
             return json.load(f)
     return None
-
-
-def _state_path(book_id: str) -> Path:
-    return (_STATE_DIR / f"{book_id}.json").resolve()
 
 
 def _ensure_card(cards: Dict[str, Any], word: str) -> Dict[str, Any]:
@@ -79,14 +76,9 @@ def _apply_quiz_results_to_cards(book_id: str, by_word_raw: Dict[str, Dict[str, 
     if not book_id:
         return {"updated_count": 0, "items": [], "skipped": "missing book_id"}
 
-    p = _state_path(book_id)
-    if not p.exists():
+    state = get_storage().load_book_state(book_id)
+    if state is None:
         return {"updated_count": 0, "items": [], "skipped": "book state not found"}
-
-    try:
-        state = json.loads(p.read_text(encoding="utf-8"))
-    except Exception as e:
-        return {"updated_count": 0, "items": [], "skipped": f"failed to read state: {e}"}
 
     user = state.setdefault("user", {})
     cards = user.setdefault("cards", {})
@@ -123,7 +115,7 @@ def _apply_quiz_results_to_cards(book_id: str, by_word_raw: Dict[str, Dict[str, 
         })
 
     try:
-        p.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+        get_storage().save_book_state(state)
     except Exception as e:
         return {"updated_count": 0, "items": updated_items, "skipped": f"failed to write state: {e}"}
 
@@ -343,7 +335,11 @@ def start_session_quiz(payload: Dict[str, Any]):
             "options": q.get("options", []),
             "words": q.get("words", [])
         }
-    _save_session(session_id, {"answers": answer_key,"targets": words})
+    _save_session(session_id, {
+        "answers": answer_key,
+        "targets": words,
+        "user_id": current_user_id(),
+    })
 
     return {"session_id": session_id, "items": items, "need_llm": missing_types}
 
@@ -359,6 +355,8 @@ def submit_session_quiz(payload: Dict[str, Any]):
     answers = payload.get("answers") or []
     session_id = payload.get("session_id")
     session_cache = _load_session(session_id) if session_id else None
+    if session_cache and session_cache.get("user_id") not in {None, current_user_id()}:
+        raise HTTPException(404, "quiz session not found")
     targets = (session_cache or {}).get("targets", [])  # 当天词表
 
     bank_list = _load_qbank()
