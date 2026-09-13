@@ -1,0 +1,4210 @@
+{
+  "benchmark_version": 1,
+  "corpus_sha256": "9f06c861e540742f5e4dae3033bc6597e274d9bfd709eb4a5aa30ae74f1c4cbf",
+  "query_count": 24,
+  "material_count": 12,
+  "environment": {
+    "python": "3.12.5",
+    "platform": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "timing_repeats": 7,
+  "paid_calls": 0,
+  "configurations": {
+    "legacy": {
+      "mode": "legacy",
+      "chunking": "fixed",
+      "chunks": 12,
+      "top_k": 3,
+      "candidate_depth": "all",
+      "pool_size": "all",
+      "rerank": false,
+      "embedding_model": null,
+      "metrics": {
+        "recall@3": 0.875,
+        "hit@3": 0.9166666666666666,
+        "mrr@3": 0.9166666666666666,
+        "ndcg@3": 0.90218622142738
+      },
+      "latency_ms": {
+        "median": 0.2443965058773756,
+        "p95": 0.2677920274436474
+      },
+      "stage_median_ms": {
+        "legacy_scoring_ms": 0.2420624950900674,
+        "total_ms": 0.2420624950900674
+      },
+      "fixture_build_ms": 0.8422079845331609,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.8749
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.4864
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.3806
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.9844
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.4338
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.4338
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.7726
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.503
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.4471
+            }
+          ]
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.9849
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.4913
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.3225
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.6949
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.4582
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.3942
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.9346
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.5459
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.5459
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.5775
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.2459
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.2422
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.9574
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.6238
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.5141
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.4084
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.8538
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.4663
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.4591
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.7749
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.4331
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.4057
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.9847
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.6762
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.3692
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.179
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.9428
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.7876
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.5797
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.573
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.8946
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.6674
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.6039
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.9441
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.4442
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.9029
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.4012
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.4012
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.7803
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.4007
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.3584
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.723
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.3176
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.26
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.875
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.2504
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.2504
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.9417
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.6423
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.4053
+            }
+          ]
+        }
+      ]
+    },
+    "legacy_weighted": {
+      "mode": "legacy",
+      "chunking": "fixed",
+      "chunks": 12,
+      "top_k": 3,
+      "candidate_depth": "all",
+      "pool_size": "all",
+      "rerank": false,
+      "embedding_model": "test:sha256-token-hash:256:v1",
+      "metrics": {
+        "recall@3": 0.8958333333333334,
+        "hit@3": 0.9166666666666666,
+        "mrr@3": 0.9166666666666666,
+        "ndcg@3": 0.9079239621018839
+      },
+      "latency_ms": {
+        "median": 0.5897294904571027,
+        "p95": 0.6369169568642974
+      },
+      "stage_median_ms": {
+        "legacy_scoring_ms": 0.5877499934285879,
+        "total_ms": 0.5877499934285879
+      },
+      "fixture_build_ms": 0.8262080373242497,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.5499
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.3192
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.2398
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.5819
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.2432
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.2216
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.4263
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.2609
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.2609
+            }
+          ]
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.6944
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.2412
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.1778
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.4518
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.2702
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.2525
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.5931
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.2988
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.2456
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.5174
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.3395
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.2984
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.1247
+            }
+          ]
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.6642
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.5491
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.4496
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.327
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.6732
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.3568
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.3491
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.9639404333166532
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.6664
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.3622
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.3202
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.6796
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.4428
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.1662
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.1452
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.5344
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.517
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.3786
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.3224
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.5643
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.382
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.3435
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.6535
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.4121
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.1988
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.5767
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.2298
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.2018
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.5339
+            },
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.2352
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.2291
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.4229
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.1436
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.1429
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.6797
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.1538
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.1534
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.7287
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.4192
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.2046
+            }
+          ]
+        }
+      ]
+    },
+    "bm25": {
+      "mode": "bm25",
+      "chunking": "fixed",
+      "chunks": 12,
+      "top_k": 3,
+      "candidate_depth": 12,
+      "pool_size": 12,
+      "rerank": false,
+      "embedding_model": null,
+      "metrics": {
+        "recall@3": 0.875,
+        "hit@3": 0.9166666666666666,
+        "mrr@3": 0.9166666666666666,
+        "ndcg@3": 0.90218622142738
+      },
+      "latency_ms": {
+        "median": 0.2683124621398747,
+        "p95": 0.30079198768362403
+      },
+      "stage_median_ms": {
+        "lexical_ms": 0.25660399114713073,
+        "dense_ms": 0.00012497184798121452,
+        "fusion_ms": 0.0014999823179095984,
+        "rerank_ms": 4.202593117952347e-05,
+        "total_ms": 0.2670834946911782
+      },
+      "fixture_build_ms": 0.7667919853702188,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 10.614281
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 3.512614
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 1.777071
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 7.544715
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 1.52541
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 1.046391
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 7.63686
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 2.862876
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 2.75975
+            }
+          ]
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 10.499693
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 1.531031
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.968747
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 6.27767
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 2.73889
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 2.605181
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 8.133915
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 1.765785
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 1.683197
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 8.004548
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.945949
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.864721
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 13.537082
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 11.672795
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 8.458263
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 2.668221
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 11.824481
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 2.500273
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 2.269594
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 13.023959
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 4.945824
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 2.408089
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 10.375853
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 10.766237
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 2.763933
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 1.052181
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 7.864213
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 5.556957
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 2.866928
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 2.016646
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 9.119585
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 4.024896
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 2.677674
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 9.127316
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 1.617021
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 11.965722
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 2.149929
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 1.287006
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 11.78641
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 2.060289
+            },
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 1.483749
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 11.344049
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 1.617021
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 1.226288
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 12.455557
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.797469
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.747801
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 11.99868
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 5.189253
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 1.272709
+            }
+          ]
+        }
+      ]
+    },
+    "dense": {
+      "mode": "dense",
+      "chunking": "fixed",
+      "chunks": 12,
+      "top_k": 3,
+      "candidate_depth": 12,
+      "pool_size": 12,
+      "rerank": false,
+      "embedding_model": "test:sha256-token-hash:256:v1",
+      "metrics": {
+        "recall@3": 0.7708333333333334,
+        "hit@3": 0.8333333333333334,
+        "mrr@3": 0.8333333333333334,
+        "ndcg@3": 0.8116126654744034
+      },
+      "latency_ms": {
+        "median": 0.4016250022687018,
+        "p95": 0.4355839919298887
+      },
+      "stage_median_ms": {
+        "lexical_ms": 4.202593117952347e-05,
+        "dense_ms": 0.383312493795529,
+        "fusion_ms": 0.0005410111043602228,
+        "rerank_ms": 4.196772351861e-05,
+        "total_ms": 0.3888334904331714
+      },
+      "fixture_build_ms": 0.7704999879933894,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.284019
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.252646
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.45675
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.252856
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.313625
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.468165
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.422577
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.367884
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.226779
+            }
+          ]
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.424334
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.48795
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.396863
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.334664
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.525427
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.267261
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.259082
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.577694
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.361478
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.346844
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.430037
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.251754
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.20025
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.295689
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.219578
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.293987
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.415761
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.385758
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.361478
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.309839
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.332309
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.214599
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.519947
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.554479
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.236643
+            }
+          ]
+        }
+      ]
+    },
+    "hybrid": {
+      "mode": "hybrid",
+      "chunking": "fixed",
+      "chunks": 12,
+      "top_k": 3,
+      "candidate_depth": 12,
+      "pool_size": 12,
+      "rerank": false,
+      "embedding_model": "test:sha256-token-hash:256:v1",
+      "metrics": {
+        "recall@3": 0.8958333333333334,
+        "hit@3": 0.9166666666666666,
+        "mrr@3": 0.9166666666666666,
+        "ndcg@3": 0.9079239621018839
+      },
+      "latency_ms": {
+        "median": 0.6661875231657177,
+        "p95": 0.7156669744290411
+      },
+      "stage_median_ms": {
+        "lexical_ms": 0.2527085307519883,
+        "dense_ms": 0.38181254058144987,
+        "fusion_ms": 0.004021014319732785,
+        "rerank_ms": 4.202593117952347e-05,
+        "total_ms": 0.6528125086333603
+      },
+      "fixture_build_ms": 0.8003339753486216,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.016393
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.031498
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.016393
+            }
+          ]
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.032787
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.031746
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.031498
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.9639404333166532
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.03125
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.032787
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.032787
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 0.031281
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.016129
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.016393
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.016129
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.032787
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.032258
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.015873
+            }
+          ]
+        }
+      ]
+    },
+    "hybrid_rerank": {
+      "mode": "hybrid",
+      "chunking": "fixed",
+      "chunks": 12,
+      "top_k": 3,
+      "candidate_depth": 12,
+      "pool_size": 12,
+      "rerank": true,
+      "embedding_model": "test:sha256-token-hash:256:v1",
+      "metrics": {
+        "recall@3": 0.8958333333333334,
+        "hit@3": 0.9166666666666666,
+        "mrr@3": 0.9166666666666666,
+        "ndcg@3": 0.9079239621018839
+      },
+      "latency_ms": {
+        "median": 0.8123955340124667,
+        "p95": 0.9474169928580523
+      },
+      "stage_median_ms": {
+        "lexical_ms": 0.25277098757214844,
+        "dense_ms": 0.3840835124719888,
+        "fusion_ms": 0.00431251828558743,
+        "rerank_ms": 0.1399999891873449,
+        "total_ms": 0.7986459822859615
+      },
+      "fixture_build_ms": 0.7942920201458037,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 1.166667
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.583333
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.25
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 1.125
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.333333
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.333333
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.797619
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.428571
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.285714
+            }
+          ]
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 1.083333
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 0.25
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.25
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.755952
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.428571
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.428571
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 1.0
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.333333
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.333333
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.696429
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.410714
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.375
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.0
+            }
+          ]
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 1.0
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.811111
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.6
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.4
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 1.0625
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.4
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 0.4
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.9639404333166532
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 1.013889
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.586806
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.475694
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 1.0
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.660714
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.25
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.125
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 1.0
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.933333
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.5
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.5
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 1.1875
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.6
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.4625
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 1.166667
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.25
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.0
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 1.083333
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.25
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 0.25
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 0.910714
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.375
+            },
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 0.375
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.821429
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 0.25
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 0.25
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 1.125
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 0.2
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 0.2
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 1.125
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 0.6625
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    "bm25_paragraph": {
+      "mode": "bm25",
+      "chunking": "paragraph",
+      "chunks": 24,
+      "top_k": 3,
+      "candidate_depth": 12,
+      "pool_size": 12,
+      "rerank": false,
+      "embedding_model": null,
+      "metrics": {
+        "recall@3": 0.875,
+        "hit@3": 0.9166666666666666,
+        "mrr@3": 0.9166666666666666,
+        "ndcg@3": 0.9006837394822406
+      },
+      "latency_ms": {
+        "median": 0.29829147388227284,
+        "p95": 0.3406250034458935
+      },
+      "stage_median_ms": {
+        "lexical_ms": 0.28120799106545746,
+        "dense_ms": 0.00012497184798121452,
+        "fusion_ms": 0.001834006980061531,
+        "rerank_ms": 4.202593117952347e-05,
+        "total_ms": 0.296791986329481
+      },
+      "fixture_build_ms": 0.8275000145658851,
+      "queries": [
+        {
+          "id": "q01",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.9639404333166532
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 10.809069
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 1,
+              "score": 5.607577
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 3.969376
+            }
+          ]
+        },
+        {
+          "id": "q02",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 7.985461
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 1,
+              "score": 2.284056
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 1.536863
+            }
+          ]
+        },
+        {
+          "id": "q03",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 8.343181
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 4.10617
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 3.276503
+            }
+          ]
+        },
+        {
+          "id": "q04",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 13.822008
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 1,
+              "score": 2.284056
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 0,
+              "score": 1.162582
+            }
+          ]
+        },
+        {
+          "id": "q05",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 8.338587
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 4.129857
+            },
+            {
+              "document_id": "transport",
+              "chunk_index": 0,
+              "score": 3.9995
+            }
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 11.18764
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 1,
+              "score": 2.451135
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 1,
+              "score": 2.258399
+            }
+          ]
+        },
+        {
+          "id": "q07",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 10.797755
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 1.815713
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 1,
+              "score": 1.714889
+            }
+          ]
+        },
+        {
+          "id": "q08",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q09",
+          "category": "synonym",
+          "metrics": {
+            "recall@3": 0.0,
+            "hit@3": 0.0,
+            "mrr@3": 0.0,
+            "ndcg@3": 0.0
+          },
+          "items": []
+        },
+        {
+          "id": "q10",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 15.691774
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 1,
+              "score": 3.270456
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "danish",
+              "chunk_index": 1,
+              "score": 14.630761
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 1,
+              "score": 7.940597
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 5.408257
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 0,
+              "score": 14.850815
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 1,
+              "score": 2.814176
+            },
+            {
+              "document_id": "confusions",
+              "chunk_index": 0,
+              "score": 2.630908
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "category": "question",
+          "metrics": {
+            "recall@3": 0.5,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 0.8262346571285599
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 1,
+              "score": 13.937462
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 7.779605
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 1,
+              "score": 6.574817
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "confusions",
+              "chunk_index": 1,
+              "score": 13.806704
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "teaching",
+              "chunk_index": 1,
+              "score": 14.21577
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 1,
+              "score": 3.793667
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 1,
+              "score": 1.761919
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "transport",
+              "chunk_index": 1,
+              "score": 10.767311
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "countability",
+              "chunk_index": 1,
+              "score": 7.854755
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 1,
+              "score": 3.230668
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 3.164221
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 12.842522
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 1,
+              "score": 6.09658
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 2.722659
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "conditionals",
+              "chunk_index": 1,
+              "score": 10.266285
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 2.337159
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 1,
+              "score": 2.284056
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "voice",
+              "chunk_index": 1,
+              "score": 13.411399
+            },
+            {
+              "document_id": "voice",
+              "chunk_index": 0,
+              "score": 4.8723
+            },
+            {
+              "document_id": "questions",
+              "chunk_index": 0,
+              "score": 2.133227
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "pronunciation",
+              "chunk_index": 1,
+              "score": 17.581128
+            },
+            {
+              "document_id": "countability",
+              "chunk_index": 0,
+              "score": 3.266843
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 0,
+              "score": 2.771665
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "category": "question",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "articles",
+              "chunk_index": 1,
+              "score": 14.246594
+            },
+            {
+              "document_id": "danish",
+              "chunk_index": 0,
+              "score": 2.233312
+            },
+            {
+              "document_id": "modals",
+              "chunk_index": 0,
+              "score": 2.092708
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "modals",
+              "chunk_index": 1,
+              "score": 16.803071
+            },
+            {
+              "document_id": "articles",
+              "chunk_index": 1,
+              "score": 1.363212
+            },
+            {
+              "document_id": "teaching",
+              "chunk_index": 1,
+              "score": 1.030007
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "category": "exact",
+          "metrics": {
+            "recall@3": 1.0,
+            "hit@3": 1.0,
+            "mrr@3": 1.0,
+            "ndcg@3": 1.0
+          },
+          "items": [
+            {
+              "document_id": "perfect",
+              "chunk_index": 1,
+              "score": 13.37846
+            },
+            {
+              "document_id": "perfect",
+              "chunk_index": 0,
+              "score": 6.898326
+            },
+            {
+              "document_id": "conditionals",
+              "chunk_index": 0,
+              "score": 6.471144
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "promotion": {
+    "default_mode": "legacy",
+    "default_chunking": "fixed",
+    "reranker_pair_gate": false,
+    "default_rerank": false,
+    "dense_promotion_eligible": false,
+    "reason": "Only lexical evidence is eligible; hash test vectors do not validate production semantics."
+  }
+}
