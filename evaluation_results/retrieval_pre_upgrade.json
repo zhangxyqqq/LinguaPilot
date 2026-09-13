@@ -1,0 +1,884 @@
+{
+  "revision": "381fbc56e92e31b7f78ecf1043a29a7c179d5a4a",
+  "tests": "33 passed in 0.92s",
+  "corpus_sha256": "9f06c861e540742f5e4dae3033bc6597e274d9bfd709eb4a5aa30ae74f1c4cbf",
+  "baseline_sha256": "28ad3e50743e05b2cb2dc8ebb2b96005add8aa8b3a0e997b97bc81d39c91af24",
+  "results": {
+    "q01": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "voice",
+          "source_name": "voice.md",
+          "chunk_index": 0,
+          "text": "# Passive voice\nThe passive voice uses a form of be plus a past participle. The window was broken is passive because the subject receives the action. A by phrase can name the agent, but it is often omitted when the agent is unknown. Choose passive voice when the result matters more than the person responsible.\n\n# Active voice\nActive voice names the doer as the subject. The child broke the window is active. The verb agrees with that subject. Compare the active and passive versions to see how the same event can foreground a different participant.",
+          "score": 0.8749,
+          "lexical_score": 0.8749,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "perfect",
+          "source_name": "perfect.md",
+          "chunk_index": 0,
+          "text": "# Present perfect\nThe present perfect combines have or has with a past participle. Use it for experiences without a finished past time: I have visited Oslo. It can connect an earlier event to the present: she has lost her key and cannot open the door. Avoid a finished time expression such as yesterday in this use.\n\n# Past simple\nThe past simple describes events at a finished past time. I visited Oslo yesterday gives a completed time frame. Regular verbs take ed, while irregular forms must be learned. The question Did you visit Oslo uses the base form after did.",
+          "score": 0.4864,
+          "lexical_score": 0.4864,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "conditionals",
+          "source_name": "conditionals.md",
+          "chunk_index": 0,
+          "text": "# Hypothetical conditions\nThe second conditional uses if with past simple and would with a base verb. If I had time, I would travel describes an unlikely or imaginary present situation. The past form signals distance from reality rather than past time.\n\n# Real conditions\nThe first conditional uses if with present simple and will with a base verb. If it rains, we will stay home describes a possible future condition. Do not normally put will in the if clause when stating the condition.",
+          "score": 0.3806,
+          "lexical_score": 0.3806,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q02": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "perfect",
+          "source_name": "perfect.md",
+          "chunk_index": 0,
+          "text": "# Present perfect\nThe present perfect combines have or has with a past participle. Use it for experiences without a finished past time: I have visited Oslo. It can connect an earlier event to the present: she has lost her key and cannot open the door. Avoid a finished time expression such as yesterday in this use.\n\n# Past simple\nThe past simple describes events at a finished past time. I visited Oslo yesterday gives a completed time frame. Regular verbs take ed, while irregular forms must be learned. The question Did you visit Oslo uses the base form after did.",
+          "score": 0.9844,
+          "lexical_score": 0.9844,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "conditionals",
+          "source_name": "conditionals.md",
+          "chunk_index": 0,
+          "text": "# Hypothetical conditions\nThe second conditional uses if with past simple and would with a base verb. If I had time, I would travel describes an unlikely or imaginary present situation. The past form signals distance from reality rather than past time.\n\n# Real conditions\nThe first conditional uses if with present simple and will with a base verb. If it rains, we will stay home describes a possible future condition. Do not normally put will in the if clause when stating the condition.",
+          "score": 0.4338,
+          "lexical_score": 0.4338,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.4338,
+          "lexical_score": 0.4338,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q03": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "conditionals",
+          "source_name": "conditionals.md",
+          "chunk_index": 0,
+          "text": "# Hypothetical conditions\nThe second conditional uses if with past simple and would with a base verb. If I had time, I would travel describes an unlikely or imaginary present situation. The past form signals distance from reality rather than past time.\n\n# Real conditions\nThe first conditional uses if with present simple and will with a base verb. If it rains, we will stay home describes a possible future condition. Do not normally put will in the if clause when stating the condition.",
+          "score": 0.7726,
+          "lexical_score": 0.7726,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.503,
+          "lexical_score": 0.503,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "voice",
+          "source_name": "voice.md",
+          "chunk_index": 0,
+          "text": "# Passive voice\nThe passive voice uses a form of be plus a past participle. The window was broken is passive because the subject receives the action. A by phrase can name the agent, but it is often omitted when the agent is unknown. Choose passive voice when the result matters more than the person responsible.\n\n# Active voice\nActive voice names the doer as the subject. The child broke the window is active. The verb agrees with that subject. Compare the active and passive versions to see how the same event can foreground a different participant.",
+          "score": 0.4471,
+          "lexical_score": 0.4471,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q04": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.9849,
+          "lexical_score": 0.9849,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "perfect",
+          "source_name": "perfect.md",
+          "chunk_index": 0,
+          "text": "# Present perfect\nThe present perfect combines have or has with a past participle. Use it for experiences without a finished past time: I have visited Oslo. It can connect an earlier event to the present: she has lost her key and cannot open the door. Avoid a finished time expression such as yesterday in this use.\n\n# Past simple\nThe past simple describes events at a finished past time. I visited Oslo yesterday gives a completed time frame. Regular verbs take ed, while irregular forms must be learned. The question Did you visit Oslo uses the base form after did.",
+          "score": 0.4913,
+          "lexical_score": 0.4913,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "conditionals",
+          "source_name": "conditionals.md",
+          "chunk_index": 0,
+          "text": "# Hypothetical conditions\nThe second conditional uses if with past simple and would with a base verb. If I had time, I would travel describes an unlikely or imaginary present situation. The past form signals distance from reality rather than past time.\n\n# Real conditions\nThe first conditional uses if with present simple and will with a base verb. If it rains, we will stay home describes a possible future condition. Do not normally put will in the if clause when stating the condition.",
+          "score": 0.3225,
+          "lexical_score": 0.3225,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q05": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "articles",
+          "source_name": "articles.md",
+          "chunk_index": 0,
+          "text": "# Indefinite articles\nUse a before a consonant sound and an before a vowel sound. An hour starts with a vowel sound because the h is silent. A university starts with a consonant sound despite the written vowel. Pronunciation determines the choice.\n\n# Definite reference\nThe definite article the points to something the listener can identify. I saw a dog introduces it; the dog was friendly refers back to it. Plural and uncountable nouns can have no article when talking generally, as in water is essential.",
+          "score": 0.6949,
+          "lexical_score": 0.6949,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "teaching",
+          "source_name": "teaching.md",
+          "chunk_index": 0,
+          "text": "# Classroom roles\nAn instructor prepares a lesson and guides pupils through practice. The educator checks understanding and gives feedback. A learner asks questions when an explanation is unclear. These roles describe people, not classroom objects.\n\n# Study habits\nRetrieval practice means trying to recall information before looking at the answer. Spaced review separates study sessions over time. Mixing related exercises can help learners notice differences, but checking feedback remains essential.",
+          "score": 0.4582,
+          "lexical_score": 0.4582,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "voice",
+          "source_name": "voice.md",
+          "chunk_index": 0,
+          "text": "# Passive voice\nThe passive voice uses a form of be plus a past participle. The window was broken is passive because the subject receives the action. A by phrase can name the agent, but it is often omitted when the agent is unknown. Choose passive voice when the result matters more than the person responsible.\n\n# Active voice\nActive voice names the doer as the subject. The child broke the window is active. The verb agrees with that subject. Compare the active and passive versions to see how the same event can foreground a different participant.",
+          "score": 0.3942,
+          "lexical_score": 0.3942,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q06": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "countability",
+          "source_name": "countability.md",
+          "chunk_index": 0,
+          "text": "# Uncountable nouns\nAdvice and information are uncountable nouns in standard English. Say a piece of advice instead of an advice. Use much with uncountable quantities and many with plural countable nouns. Furniture also takes singular agreement.\n\n# Countable nouns\nA countable noun has singular and plural forms: one chair, two chairs. Use fewer chairs for a smaller number and less water for a smaller amount. Some nouns change meaning when used countably, such as two coffees meaning two cups.",
+          "score": 0.9346,
+          "lexical_score": 0.9346,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "articles",
+          "source_name": "articles.md",
+          "chunk_index": 0,
+          "text": "# Indefinite articles\nUse a before a consonant sound and an before a vowel sound. An hour starts with a vowel sound because the h is silent. A university starts with a consonant sound despite the written vowel. Pronunciation determines the choice.\n\n# Definite reference\nThe definite article the points to something the listener can identify. I saw a dog introduces it; the dog was friendly refers back to it. Plural and uncountable nouns can have no article when talking generally, as in water is essential.",
+          "score": 0.5459,
+          "lexical_score": 0.5459,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "teaching",
+          "source_name": "teaching.md",
+          "chunk_index": 0,
+          "text": "# Classroom roles\nAn instructor prepares a lesson and guides pupils through practice. The educator checks understanding and gives feedback. A learner asks questions when an explanation is unclear. These roles describe people, not classroom objects.\n\n# Study habits\nRetrieval practice means trying to recall information before looking at the answer. Spaced review separates study sessions over time. Mixing related exercises can help learners notice differences, but checking feedback remains essential.",
+          "score": 0.5459,
+          "lexical_score": 0.5459,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q07": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "confusions",
+          "source_name": "confusions.md",
+          "chunk_index": 0,
+          "text": "# Affect and effect\nAffect is usually a verb meaning influence. The weather can affect your mood. Effect is usually a noun meaning a result. The medicine had an immediate effect. There are less common exceptions, so check the sentence role instead of spelling alone.\n\n# Borrow and lend\nBorrow means receive something temporarily. Lend means give something temporarily. I borrow a book from you; you lend a book to me. Return the item later. These verbs describe the same transfer from opposite perspectives.",
+          "score": 0.5775,
+          "lexical_score": 0.5775,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.2459,
+          "lexical_score": 0.2459,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "teaching",
+          "source_name": "teaching.md",
+          "chunk_index": 0,
+          "text": "# Classroom roles\nAn instructor prepares a lesson and guides pupils through practice. The educator checks understanding and gives feedback. A learner asks questions when an explanation is unclear. These roles describe people, not classroom objects.\n\n# Study habits\nRetrieval practice means trying to recall information before looking at the answer. Spaced review separates study sessions over time. Mixing related exercises can help learners notice differences, but checking feedback remains essential.",
+          "score": 0.2422,
+          "lexical_score": 0.2422,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q08": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": []
+    },
+    "q09": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": []
+    },
+    "q10": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "danish",
+          "source_name": "danish.md",
+          "chunk_index": 0,
+          "text": "# Danish noun gender\nDanish common gender nouns use en and neuter nouns use et. En bog means a book; et hus means a house. The definite suffix gives bogen and huset. Learn the article together with each noun because gender is not reliably predictable.\n\n# Danish main clauses\nIn a declarative Danish main clause the finite verb occupies the second position. I dag l\u00e6ser jeg means today I read. When a time phrase comes first, the subject follows the verb. The rule counts sentence constituents rather than individual words.",
+          "score": 0.9574,
+          "lexical_score": 0.9574,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q11": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "danish",
+          "source_name": "danish.md",
+          "chunk_index": 0,
+          "text": "# Danish noun gender\nDanish common gender nouns use en and neuter nouns use et. En bog means a book; et hus means a house. The definite suffix gives bogen and huset. Learn the article together with each noun because gender is not reliably predictable.\n\n# Danish main clauses\nIn a declarative Danish main clause the finite verb occupies the second position. I dag l\u00e6ser jeg means today I read. When a time phrase comes first, the subject follows the verb. The rule counts sentence constituents rather than individual words.",
+          "score": 0.6238,
+          "lexical_score": 0.6238,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.5141,
+          "lexical_score": 0.5141,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.4084,
+          "lexical_score": 0.4084,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q12": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "pronunciation",
+          "source_name": "pronunciation.md",
+          "chunk_index": 0,
+          "text": "# Word stress\nWord stress makes one syllable more prominent. A noun such as record often has initial stress, while the verb record often has final stress. Listen for stress along with vowel sounds. Stress can distinguish meaning even when spelling stays the same.\n\n# Silent letters\nSome written letters are not pronounced. The k in know is silent, and the b in debt is silent. English spelling preserves historical patterns. Listen to the spoken word rather than pronouncing every written letter.",
+          "score": 0.8538,
+          "lexical_score": 0.8538,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.4663,
+          "lexical_score": 0.4663,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "confusions",
+          "source_name": "confusions.md",
+          "chunk_index": 0,
+          "text": "# Affect and effect\nAffect is usually a verb meaning influence. The weather can affect your mood. Effect is usually a noun meaning a result. The medicine had an immediate effect. There are less common exceptions, so check the sentence role instead of spelling alone.\n\n# Borrow and lend\nBorrow means receive something temporarily. Lend means give something temporarily. I borrow a book from you; you lend a book to me. Return the item later. These verbs describe the same transfer from opposite perspectives.",
+          "score": 0.4591,
+          "lexical_score": 0.4591,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q13": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.7749,
+          "lexical_score": 0.7749,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.4331,
+          "lexical_score": 0.4331,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "teaching",
+          "source_name": "teaching.md",
+          "chunk_index": 0,
+          "text": "# Classroom roles\nAn instructor prepares a lesson and guides pupils through practice. The educator checks understanding and gives feedback. A learner asks questions when an explanation is unclear. These roles describe people, not classroom objects.\n\n# Study habits\nRetrieval practice means trying to recall information before looking at the answer. Spaced review separates study sessions over time. Mixing related exercises can help learners notice differences, but checking feedback remains essential.",
+          "score": 0.4057,
+          "lexical_score": 0.4057,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q14": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "confusions",
+          "source_name": "confusions.md",
+          "chunk_index": 0,
+          "text": "# Affect and effect\nAffect is usually a verb meaning influence. The weather can affect your mood. Effect is usually a noun meaning a result. The medicine had an immediate effect. There are less common exceptions, so check the sentence role instead of spelling alone.\n\n# Borrow and lend\nBorrow means receive something temporarily. Lend means give something temporarily. I borrow a book from you; you lend a book to me. Return the item later. These verbs describe the same transfer from opposite perspectives.",
+          "score": 0.9847,
+          "lexical_score": 0.9847,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q15": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "teaching",
+          "source_name": "teaching.md",
+          "chunk_index": 0,
+          "text": "# Classroom roles\nAn instructor prepares a lesson and guides pupils through practice. The educator checks understanding and gives feedback. A learner asks questions when an explanation is unclear. These roles describe people, not classroom objects.\n\n# Study habits\nRetrieval practice means trying to recall information before looking at the answer. Spaced review separates study sessions over time. Mixing related exercises can help learners notice differences, but checking feedback remains essential.",
+          "score": 0.6762,
+          "lexical_score": 0.6762,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "voice",
+          "source_name": "voice.md",
+          "chunk_index": 0,
+          "text": "# Passive voice\nThe passive voice uses a form of be plus a past participle. The window was broken is passive because the subject receives the action. A by phrase can name the agent, but it is often omitted when the agent is unknown. Choose passive voice when the result matters more than the person responsible.\n\n# Active voice\nActive voice names the doer as the subject. The child broke the window is active. The verb agrees with that subject. Compare the active and passive versions to see how the same event can foreground a different participant.",
+          "score": 0.3692,
+          "lexical_score": 0.3692,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "articles",
+          "source_name": "articles.md",
+          "chunk_index": 0,
+          "text": "# Indefinite articles\nUse a before a consonant sound and an before a vowel sound. An hour starts with a vowel sound because the h is silent. A university starts with a consonant sound despite the written vowel. Pronunciation determines the choice.\n\n# Definite reference\nThe definite article the points to something the listener can identify. I saw a dog introduces it; the dog was friendly refers back to it. Plural and uncountable nouns can have no article when talking generally, as in water is essential.",
+          "score": 0.179,
+          "lexical_score": 0.179,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q16": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "transport",
+          "source_name": "transport.md",
+          "chunk_index": 0,
+          "text": "# Road vocabulary\nAn automobile is a road vehicle with an engine and wheels. The driver steers it and passengers ride inside. A mechanic services the engine. In a vocabulary exercise, distinguish the vehicle from the person who operates or repairs it.\n\n# Railway vocabulary\nA railway journey starts at a station. Passengers board a train from a platform and show their tickets. A departure board lists destinations and times. The conductor checks tickets during the journey.",
+          "score": 0.9428,
+          "lexical_score": 0.9428,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q17": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "countability",
+          "source_name": "countability.md",
+          "chunk_index": 0,
+          "text": "# Uncountable nouns\nAdvice and information are uncountable nouns in standard English. Say a piece of advice instead of an advice. Use much with uncountable quantities and many with plural countable nouns. Furniture also takes singular agreement.\n\n# Countable nouns\nA countable noun has singular and plural forms: one chair, two chairs. Use fewer chairs for a smaller number and less water for a smaller amount. Some nouns change meaning when used countably, such as two coffees meaning two cups.",
+          "score": 0.7876,
+          "lexical_score": 0.7876,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.5797,
+          "lexical_score": 0.5797,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.573,
+          "lexical_score": 0.573,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q18": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.8946,
+          "lexical_score": 0.8946,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.6674,
+          "lexical_score": 0.6674,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "perfect",
+          "source_name": "perfect.md",
+          "chunk_index": 0,
+          "text": "# Present perfect\nThe present perfect combines have or has with a past participle. Use it for experiences without a finished past time: I have visited Oslo. It can connect an earlier event to the present: she has lost her key and cannot open the door. Avoid a finished time expression such as yesterday in this use.\n\n# Past simple\nThe past simple describes events at a finished past time. I visited Oslo yesterday gives a completed time frame. Regular verbs take ed, while irregular forms must be learned. The question Did you visit Oslo uses the base form after did.",
+          "score": 0.6039,
+          "lexical_score": 0.6039,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q19": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "conditionals",
+          "source_name": "conditionals.md",
+          "chunk_index": 0,
+          "text": "# Hypothetical conditions\nThe second conditional uses if with past simple and would with a base verb. If I had time, I would travel describes an unlikely or imaginary present situation. The past form signals distance from reality rather than past time.\n\n# Real conditions\nThe first conditional uses if with present simple and will with a base verb. If it rains, we will stay home describes a possible future condition. Do not normally put will in the if clause when stating the condition.",
+          "score": 0.9441,
+          "lexical_score": 0.9441,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "danish",
+          "source_name": "danish.md",
+          "chunk_index": 0,
+          "text": "# Danish noun gender\nDanish common gender nouns use en and neuter nouns use et. En bog means a book; et hus means a house. The definite suffix gives bogen and huset. Learn the article together with each noun because gender is not reliably predictable.\n\n# Danish main clauses\nIn a declarative Danish main clause the finite verb occupies the second position. I dag l\u00e6ser jeg means today I read. When a time phrase comes first, the subject follows the verb. The rule counts sentence constituents rather than individual words.",
+          "score": 0.4442,
+          "lexical_score": 0.4442,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q20": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "voice",
+          "source_name": "voice.md",
+          "chunk_index": 0,
+          "text": "# Passive voice\nThe passive voice uses a form of be plus a past participle. The window was broken is passive because the subject receives the action. A by phrase can name the agent, but it is often omitted when the agent is unknown. Choose passive voice when the result matters more than the person responsible.\n\n# Active voice\nActive voice names the doer as the subject. The child broke the window is active. The verb agrees with that subject. Compare the active and passive versions to see how the same event can foreground a different participant.",
+          "score": 0.9029,
+          "lexical_score": 0.9029,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "danish",
+          "source_name": "danish.md",
+          "chunk_index": 0,
+          "text": "# Danish noun gender\nDanish common gender nouns use en and neuter nouns use et. En bog means a book; et hus means a house. The definite suffix gives bogen and huset. Learn the article together with each noun because gender is not reliably predictable.\n\n# Danish main clauses\nIn a declarative Danish main clause the finite verb occupies the second position. I dag l\u00e6ser jeg means today I read. When a time phrase comes first, the subject follows the verb. The rule counts sentence constituents rather than individual words.",
+          "score": 0.4012,
+          "lexical_score": 0.4012,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.4012,
+          "lexical_score": 0.4012,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q21": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "pronunciation",
+          "source_name": "pronunciation.md",
+          "chunk_index": 0,
+          "text": "# Word stress\nWord stress makes one syllable more prominent. A noun such as record often has initial stress, while the verb record often has final stress. Listen for stress along with vowel sounds. Stress can distinguish meaning even when spelling stays the same.\n\n# Silent letters\nSome written letters are not pronounced. The k in know is silent, and the b in debt is silent. English spelling preserves historical patterns. Listen to the spoken word rather than pronouncing every written letter.",
+          "score": 0.7803,
+          "lexical_score": 0.7803,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "articles",
+          "source_name": "articles.md",
+          "chunk_index": 0,
+          "text": "# Indefinite articles\nUse a before a consonant sound and an before a vowel sound. An hour starts with a vowel sound because the h is silent. A university starts with a consonant sound despite the written vowel. Pronunciation determines the choice.\n\n# Definite reference\nThe definite article the points to something the listener can identify. I saw a dog introduces it; the dog was friendly refers back to it. Plural and uncountable nouns can have no article when talking generally, as in water is essential.",
+          "score": 0.4007,
+          "lexical_score": 0.4007,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.3584,
+          "lexical_score": 0.3584,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q22": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "articles",
+          "source_name": "articles.md",
+          "chunk_index": 0,
+          "text": "# Indefinite articles\nUse a before a consonant sound and an before a vowel sound. An hour starts with a vowel sound because the h is silent. A university starts with a consonant sound despite the written vowel. Pronunciation determines the choice.\n\n# Definite reference\nThe definite article the points to something the listener can identify. I saw a dog introduces it; the dog was friendly refers back to it. Plural and uncountable nouns can have no article when talking generally, as in water is essential.",
+          "score": 0.723,
+          "lexical_score": 0.723,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "danish",
+          "source_name": "danish.md",
+          "chunk_index": 0,
+          "text": "# Danish noun gender\nDanish common gender nouns use en and neuter nouns use et. En bog means a book; et hus means a house. The definite suffix gives bogen and huset. Learn the article together with each noun because gender is not reliably predictable.\n\n# Danish main clauses\nIn a declarative Danish main clause the finite verb occupies the second position. I dag l\u00e6ser jeg means today I read. When a time phrase comes first, the subject follows the verb. The rule counts sentence constituents rather than individual words.",
+          "score": 0.3176,
+          "lexical_score": 0.3176,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "confusions",
+          "source_name": "confusions.md",
+          "chunk_index": 0,
+          "text": "# Affect and effect\nAffect is usually a verb meaning influence. The weather can affect your mood. Effect is usually a noun meaning a result. The medicine had an immediate effect. There are less common exceptions, so check the sentence role instead of spelling alone.\n\n# Borrow and lend\nBorrow means receive something temporarily. Lend means give something temporarily. I borrow a book from you; you lend a book to me. Return the item later. These verbs describe the same transfer from opposite perspectives.",
+          "score": 0.26,
+          "lexical_score": 0.26,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q23": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "modals",
+          "source_name": "modals.md",
+          "chunk_index": 0,
+          "text": "# Obligation and permission\nMust expresses strong obligation. You must wear a helmet means it is required. May can give permission: you may leave early. Must not prohibits an action, whereas do not have to means there is no obligation. These meanings are different.\n\n# Ability\nCan expresses ability in the present. She can swim says she has the skill. Could often describes general past ability. After a modal verb use a bare infinitive: can swim, never can to swim. A modal does not take third person s.",
+          "score": 0.875,
+          "lexical_score": 0.875,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "articles",
+          "source_name": "articles.md",
+          "chunk_index": 0,
+          "text": "# Indefinite articles\nUse a before a consonant sound and an before a vowel sound. An hour starts with a vowel sound because the h is silent. A university starts with a consonant sound despite the written vowel. Pronunciation determines the choice.\n\n# Definite reference\nThe definite article the points to something the listener can identify. I saw a dog introduces it; the dog was friendly refers back to it. Plural and uncountable nouns can have no article when talking generally, as in water is essential.",
+          "score": 0.2504,
+          "lexical_score": 0.2504,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "confusions",
+          "source_name": "confusions.md",
+          "chunk_index": 0,
+          "text": "# Affect and effect\nAffect is usually a verb meaning influence. The weather can affect your mood. Effect is usually a noun meaning a result. The medicine had an immediate effect. There are less common exceptions, so check the sentence role instead of spelling alone.\n\n# Borrow and lend\nBorrow means receive something temporarily. Lend means give something temporarily. I borrow a book from you; you lend a book to me. Return the item later. These verbs describe the same transfer from opposite perspectives.",
+          "score": 0.2504,
+          "lexical_score": 0.2504,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    },
+    "q24": {
+      "total_documents": 12,
+      "retrieval": {
+        "strategy": "lexical",
+        "weights": {
+          "lexical": 1.0,
+          "semantic": 0.0
+        }
+      },
+      "items": [
+        {
+          "document_id": "perfect",
+          "source_name": "perfect.md",
+          "chunk_index": 0,
+          "text": "# Present perfect\nThe present perfect combines have or has with a past participle. Use it for experiences without a finished past time: I have visited Oslo. It can connect an earlier event to the present: she has lost her key and cannot open the door. Avoid a finished time expression such as yesterday in this use.\n\n# Past simple\nThe past simple describes events at a finished past time. I visited Oslo yesterday gives a completed time frame. Regular verbs take ed, while irregular forms must be learned. The question Did you visit Oslo uses the base form after did.",
+          "score": 0.9417,
+          "lexical_score": 0.9417,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "conditionals",
+          "source_name": "conditionals.md",
+          "chunk_index": 0,
+          "text": "# Hypothetical conditions\nThe second conditional uses if with past simple and would with a base verb. If I had time, I would travel describes an unlikely or imaginary present situation. The past form signals distance from reality rather than past time.\n\n# Real conditions\nThe first conditional uses if with present simple and will with a base verb. If it rains, we will stay home describes a possible future condition. Do not normally put will in the if clause when stating the condition.",
+          "score": 0.6423,
+          "lexical_score": 0.6423,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        },
+        {
+          "document_id": "questions",
+          "source_name": "questions.md",
+          "chunk_index": 0,
+          "text": "# Question formation\nPresent simple questions usually use do or does before the subject and the base verb after it. Does she work here is correct; does she works here is not. With be, invert the verb and subject: is she ready.\n\n# Indirect questions\nIndirect questions use statement word order in the embedded clause. Could you tell me where the station is is a polite request. Do not invert the subject and verb inside where the station is. The opening question already carries the question structure.",
+          "score": 0.4053,
+          "lexical_score": 0.4053,
+          "semantic_score": 0.0,
+          "match": "lexical"
+        }
+      ]
+    }
+  }
+}

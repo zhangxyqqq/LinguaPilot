@@ -256,12 +256,18 @@ def search_learning_materials(
     limit: int = 5,
 ) -> Dict[str, Any]:
     """Search this learner's uploaded materials and return source-attributed excerpts."""
-    return search_learning_materials_for_book(
+    result = search_learning_materials_for_book(
         runtime.context.book_id,
         query=query,
         limit=limit,
         user_id=runtime.context.user_id,
     )
+    # Retrieval diagnostics belong in developer traces, not in the model context.
+    return {"total_documents": result["total_documents"], "items": [
+        {"document_id": item["document_id"], "source_name": item["source_name"],
+         "chunk_index": item["chunk_index"], "text": item["text"][:900]}
+        for item in result["items"][:8]
+    ]}
 
 
 TOOLS = [get_weak_words, get_due_words, get_learner_memory, search_learning_materials]

@@ -361,6 +361,7 @@ class SQLiteStorage:
         book_id: str,
         store: Mapping[str, Any],
         user_id: Optional[str] = None,
+        *, expected_json=...,
     ) -> None:
         self.initialize()
         owner = validate_user_id(user_id or current_user_id())
@@ -368,6 +369,15 @@ class SQLiteStorage:
         if not self.book_exists(safe_book_id, owner):
             raise FileNotFoundError(f"book not found: {safe_book_id}")
         with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            if expected_json is not ...:
+                row = connection.execute(
+                    "SELECT store_json FROM material_stores WHERE user_id = ? AND book_id = ?",
+                    (owner, safe_book_id),
+                ).fetchone()
+                actual = _canonical_json(json.loads(row["store_json"])) if row else None
+                if actual != expected_json:
+                    raise ValueError("material store changed concurrently; retry operation")
             connection.execute(
                 """INSERT INTO material_stores(user_id, book_id, store_json, updated_at)
                    VALUES (?, ?, ?, ?)
